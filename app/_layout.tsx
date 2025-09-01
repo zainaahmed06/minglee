@@ -3,7 +3,7 @@ import {Stack} from "expo-router";
 export default function RootLayout() {
   return (
     <Stack
-      initialRouteName='(tabs)'
+      initialRouteName='(auth)'
       screenOptions={{
         headerShown: false,
       }}

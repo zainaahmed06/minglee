@@ -1,17 +1,19 @@
+import MainHeader from "@/components/MainHeader";
 import SwitchButton from "@/components/SwitchButton";
+import {colors} from "@/theme";
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {SafeAreaView} from "react-native-safe-area-context";
 
-const Profile = () => {
+const Matches = () => {
   const tabs = [
     {
-      key: "likes",
-      title: "Likes",
+      key: "matches",
+      title: "Matches",
       count: 85,
     },
     {
-      key: "superlikes",
-      title: "Super Likes",
+      key: "likes",
+      title: "Likes",
       count: 24,
     },
   ];
@@ -20,9 +22,9 @@ const Profile = () => {
     console.log(`Tab ${index} pressed`);
     // You can add your logic here to change content based on selected tab
   };
-
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.background}}>
+      <MainHeader />
       <SwitchButton
         tabs={tabs}
         activeColor='#8A4FFF'
@@ -30,16 +32,8 @@ const Profile = () => {
         onTabPress={handleTabPress}
         initialTabIndex={0}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    paddingTop: 40,
-  },
-});
-
-export default Profile;
+export default Matches;

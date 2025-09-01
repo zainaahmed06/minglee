@@ -2,7 +2,7 @@ import SwitchButton from "@/components/SwitchButton";
 import React from "react";
 import {StyleSheet, View} from "react-native";
 
-const Profile = () => {
+const SwitchButtonExample = () => {
   const tabs = [
     {
       key: "likes",
@@ -42,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile;
+export default SwitchButtonExample;

@@ -1,4 +1,5 @@
 import {BellIcon, LogoIcon, MenuIcon} from "@/constants/OtherIcons";
+import {colors} from "@/theme";
 import React from "react";
 import {StyleSheet, TouchableOpacity, View} from "react-native";
 
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingVertical: 8,
+    backgroundColor: colors.background,
   },
   logoContainer: {
     width: 40,
