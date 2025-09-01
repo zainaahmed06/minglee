@@ -3,13 +3,15 @@ import React from "react";
 
 const AuthLayout = () => {
   return (
-    <Stack>
-      <Stack.Screen />
-      <Stack.Screen />
-      <Stack.Screen />
-      <Stack.Screen />
-      <Stack.Screen />
-      <Stack.Screen />
+    <Stack initialRouteName='welcome' screenOptions={{headerShown: false}}>
+      <Stack.Screen name='onboarding' />
+      <Stack.Screen name='welcome' />
+      <Stack.Screen name='signin' />
+      <Stack.Screen name='signup' />
+      <Stack.Screen name='forgotPassword' />
+      <Stack.Screen name='resetPassword' />
+      <Stack.Screen name='verifyOtp' />
+      <Stack.Screen name='accountSetup' />
     </Stack>
   );
 };

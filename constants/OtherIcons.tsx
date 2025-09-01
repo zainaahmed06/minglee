@@ -10,8 +10,8 @@ import Svg, {
 } from "react-native-svg";
 
 // Logo icon component
-export const LogoIcon = () => (
-  <Svg width='100' height='67' viewBox='0 0 228 67' fill='none'>
+export const LogoIcon = ({size = 100}) => (
+  <Svg width={size} height='67' viewBox='0 0 228 67' fill='none'>
     <G clipPath='url(#clip0_4379_11605)'>
       <Mask
         id='mask0_4379_11605'
