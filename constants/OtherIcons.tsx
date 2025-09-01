@@ -24,15 +24,15 @@ export const LogoIcon = () => (
           d='M119.625 11.4L118 3.925L121.25 5.55L124.5 1L127.75 5.55L131 3.925L129.375 11.4H119.625Z'
           fill='white'
           stroke='white'
-          stroke-width='1.3'
-          stroke-linejoin='round'
+          strokeWidth='1.3'
+          strokeLinejoin='round'
         />
         <Path
           d='M124.5 9.12539C124.845 9.12539 125.176 8.98843 125.419 8.74463C125.663 8.50083 125.8 8.17017 125.8 7.82539C125.8 7.48061 125.663 7.14995 125.419 6.90615C125.176 6.66235 124.845 6.52539 124.5 6.52539C124.155 6.52539 123.825 6.66235 123.581 6.90615C123.337 7.14995 123.2 7.48061 123.2 7.82539C123.2 8.17017 123.337 8.50083 123.581 8.74463C123.825 8.98843 124.155 9.12539 124.5 9.12539Z'
           fill='black'
           stroke='black'
-          stroke-width='1.3'
-          stroke-linejoin='round'
+          strokeWidth='1.3'
+          strokeLinejoin='round'
         />
       </Mask>
       <G mask='url(#mask0_4379_11605)'>
@@ -152,8 +152,8 @@ export const LogoIcon = () => (
 export const BellIcon = () => (
   <Svg width='28' height='28' viewBox='0 0 28 28' fill='none'>
     <Path
-      fill-rule='evenodd'
-      clip-rule='evenodd'
+      fillRule='evenodd'
+      clipRule='evenodd'
       d='M14.2312 26.25H14.2289C12.921 26.2489 11.6832 25.6725 10.744 24.626C10.4209 24.2679 10.45 23.7137 10.8094 23.3917C11.1687 23.0674 11.7217 23.0965 12.0449 23.457C12.6492 24.1302 13.425 24.5 14.23 24.5H14.2312C15.0397 24.5 15.819 24.1302 16.4245 23.4559C16.7489 23.0977 17.3019 23.0685 17.66 23.3917C18.0194 23.7149 18.0485 24.269 17.7254 24.6272C16.7827 25.6737 15.5425 26.25 14.2312 26.25Z'
       fill='#212121'
     />
@@ -165,8 +165,8 @@ export const BellIcon = () => (
       width='23'
       height='21'>
       <Path
-        fill-rule='evenodd'
-        clip-rule='evenodd'
+        fillRule='evenodd'
+        clipRule='evenodd'
         d='M3.5 1.16669H25.0797V21.406H3.5V1.16669Z'
         fill='white'
       />

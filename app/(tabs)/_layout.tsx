@@ -59,6 +59,10 @@ const TabsLayout = () => {
         name='chats'
         options={{
           title: "Chats",
+          tabBarBadge: 5,
+          tabBarBadgeStyle: {
+            backgroundColor: colors.textSecondary,
+          },
           tabBarIcon: ({color, focused, size}) => (
             <Chats
               color={focused ? colors.background : colors.text}
