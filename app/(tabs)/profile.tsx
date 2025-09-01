@@ -1,11 +1,13 @@
+import {colors} from "@/theme";
 import React from "react";
-import {Text, View} from "react-native";
+import {Text} from "react-native";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 const Profile = () => {
   return (
-    <View>
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.background}}>
       <Text>Profile</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 

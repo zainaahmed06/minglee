@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import {
   NativeSyntheticEvent,
+  Pressable,
   StyleProp,
   StyleSheet,
   Text,
@@ -14,7 +15,6 @@ import {
   TextInputChangeEventData,
   TextInputProps,
   TextStyle,
-  TouchableOpacity,
   View,
   ViewStyle,
 } from "react-native";
@@ -520,11 +520,9 @@ export const Input = React.memo(
             {(endContent || (isClearable && inputValue)) && (
               <View style={styles.endContent}>
                 {isClearable && inputValue ? (
-                  <TouchableOpacity
-                    onPress={handleClear}
-                    style={styles.clearButton}>
+                  <Pressable onPress={handleClear} style={styles.clearButton}>
                     <Text style={clearButtonTextStyle}>×</Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 ) : (
                   endContent
                 )}

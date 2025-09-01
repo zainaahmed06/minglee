@@ -3,11 +3,11 @@ import React, {forwardRef, useCallback, useMemo, useState} from "react";
 import {
   ActivityIndicator,
   GestureResponderEvent,
+  Pressable,
+  PressableProps,
   StyleProp,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  TouchableOpacityProps,
   View,
   ViewStyle,
 } from "react-native";
@@ -30,7 +30,7 @@ export type ButtonSize = "sm" | "md" | "lg";
 export type ButtonRadius = "none" | "sm" | "md" | "lg" | "full";
 export type SpinnerPlacement = "start" | "end";
 
-export interface ButtonProps extends Omit<TouchableOpacityProps, "style"> {
+export interface ButtonProps extends Omit<PressableProps, "style"> {
   children?: React.ReactNode;
   variant?: ButtonVariant;
   color?: ButtonColor;
@@ -342,17 +342,16 @@ const Button = forwardRef<any, ButtonProps>(
     );
 
     return (
-      <TouchableOpacity
+      <Pressable
         ref={ref}
         style={buttonStyle}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         onPress={handlePress}
         disabled={isDisabled || isLoading}
-        activeOpacity={disableAnimation ? 1 : 0.8}
         {...props}>
         {renderContent()}
-      </TouchableOpacity>
+      </Pressable>
     );
   }
 );
