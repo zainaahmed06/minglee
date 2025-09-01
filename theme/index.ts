@@ -5,7 +5,7 @@ import {ColorPalette, FontSizeScale, RadiusScale, SpacingScale} from "./types";
 export const colors: ColorPalette = {
   // Primary colors - Modern crypto blue/purple gradient
 
-  primary: "#6366f1", // Indigo
+  primary: "#9610FF", // Indigo
   primaryLight: "#818cf8",
   primaryDark: "#4338ca",
   secondary: "#06b6d4", // Cyan

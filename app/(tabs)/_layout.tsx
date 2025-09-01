@@ -7,6 +7,7 @@ const TabsLayout = () => {
   return (
     <Tabs
       screenOptions={{
+        // tabBarButton: (props) => <Pressable {...props} android_ripple={null} />,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textSecondary,
         tabBarStyle: {
