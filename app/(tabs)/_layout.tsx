@@ -5,6 +5,7 @@ const TabsLayout = () => {
   return (
     <Tabs>
       <Tabs.Screen name='chats' />
+      <Tabs.Screen name='explore' />
       <Tabs.Screen name='matches' />
       <Tabs.Screen name='chat' />
       <Tabs.Screen name='profile' />
