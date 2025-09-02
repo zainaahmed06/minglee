@@ -128,7 +128,7 @@ const AccountSetup = () => {
           <Text style={[styles.heading, {color: colors.text}]}>
             Find matches nearby📍
           </Text>
-          <Text style={[styles.subHeading, {color: colors.text}]}>
+          <Text style={[styles.subHeading, {color: colors.textTertiary}]}>
             Select your preferred distance range to discover matches
             conveniently. We will help you find love close by.
           </Text>
@@ -154,9 +154,13 @@ const AccountSetup = () => {
         </ProgressStep>
         {/* Show your best self */}
         <ProgressStep>
-          <View>
-            <Text>Show your best self</Text>
-          </View>
+          <Text style={[styles.heading, {color: colors.text}]}>
+            Your relationship goals 💘
+          </Text>
+          <Text style={[styles.subHeading, {color: colors.text}]}>
+            Choose the type of relationship you are seeking on Datify. Love,
+            friendship, or something in between its your choice.
+          </Text>
         </ProgressStep>
       </ProgressSteps>
     </SafeAreaView>
