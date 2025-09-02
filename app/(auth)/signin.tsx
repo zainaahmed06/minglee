@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
 import {Input} from "@/components/Input";
+import {BackIcon, LockIcon, MailIcon} from "@/constants/MingleeIcons";
 import {colors, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
@@ -10,11 +11,11 @@ import {SafeAreaView} from "react-native-safe-area-context";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
   const handleSignIn = () => {
     // Implement sign in logic here
-    console.log("Sign in with:", {email, password, rememberMe});
+    console.log("Sign in with:", {email, password});
   };
 
   const handleSocialSignIn = (provider: string) => {
@@ -30,12 +31,12 @@ const SignIn = () => {
       ]}>
       {/* Back Button */}
       <Pressable style={styles.backButton} onPress={() => router.back()}>
-        <Ionicons name='chevron-back' size={24} color={colors.text} />
+        <BackIcon color={colors.text} size={24} />
       </Pressable>
 
       {/* Main Content */}
       <View style={styles.content}>
-        {/* Header */}{" "}
+        {/* Header */}
         <Text style={[styles.heading, {color: colors.text}]}>
           Welcome back 👋
         </Text>
@@ -48,15 +49,7 @@ const SignIn = () => {
             radius='lg'
             value={email}
             onValueChange={setEmail}
-            startContent={
-              <View style={styles.inputIcon}>
-                <Ionicons
-                  name='mail-outline'
-                  size={22}
-                  color={colors.textSecondary}
-                />
-              </View>
-            }
+            startContent={<MailIcon color={colors.textSecondary} />}
           />
 
           <View style={styles.inputSpacer} />
@@ -69,49 +62,20 @@ const SignIn = () => {
             type='password'
             value={password}
             onValueChange={setPassword}
-            startContent={
-              <View style={styles.inputIcon}>
-                <Ionicons
-                  name='lock-closed-outline'
-                  size={22}
-                  color={colors.textSecondary}
-                />
-              </View>
-            }
+            secureTextEntry={isPasswordHidden}
+            startContent={<LockIcon color={colors.textSecondary} />}
             endContent={
-              <Pressable>
-                <Text style={{color: colors.textSecondary}}>👁️</Text>
-              </Pressable>
+              <Ionicons
+                onPress={() => setIsPasswordHidden(!isPasswordHidden)}
+                name={isPasswordHidden ? "eye-off" : "eye"}
+                size={24}
+                color={colors.textSecondary}
+              />
             }
           />
         </View>
-        {/* Remember Me & Forgot Password */}
+        {/* Forgot Password */}
         <View style={styles.forgotPasswordRow}>
-          {/* Remember Me Checkbox */}
-          <View style={styles.checkboxContainer}>
-            <Pressable
-              style={styles.checkbox}
-              onPress={() => setRememberMe(!rememberMe)}>
-              <View
-                style={[
-                  styles.checkboxInner,
-                  {
-                    backgroundColor: rememberMe
-                      ? colors.primary
-                      : "transparent",
-                    borderColor: rememberMe ? colors.primary : colors.border,
-                  },
-                ]}>
-                {rememberMe && (
-                  <Text style={{color: "#fff", fontSize: 12}}>✓</Text>
-                )}
-              </View>
-            </Pressable>
-            <Text style={[styles.checkboxLabel, {color: colors.text}]}>
-              Remember me
-            </Text>
-          </View>
-
           {/* Forgot Password Link */}
           <Pressable onPress={() => router.push("/(auth)/forgotPassword")}>
             <Text style={[styles.forgotPasswordLink, {color: colors.primary}]}>
@@ -127,7 +91,7 @@ const SignIn = () => {
           radius='full'
           onPress={handleSignIn}
           style={styles.signinButton}>
-          Sign in
+          Sign In
         </Button>
         {/* Divider */}
         <View style={styles.dividerContainer}>
@@ -204,15 +168,9 @@ const styles = StyleSheet.create({
   inputSpacer: {
     height: 16,
   },
-  inputIcon: {
-    width: 24,
-    height: 24,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   forgotPasswordRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     alignItems: "center",
     marginVertical: 20,
   },

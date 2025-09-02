@@ -113,7 +113,7 @@ const Welcome = () => {
           fullWidth
           radius='full'
           onPress={handleSignIn}>
-          Log in
+          Sign In
         </Button>
 
         {/* Sign Up Link */}
