@@ -1,7 +1,7 @@
 import Button from "@/components/Button";
-import {Input} from "@/components/Input";
+import OtpInput from "@/components/OtpInput";
 import {BackIcon} from "@/constants/MingleeIcons";
-import {colors, spacing} from "@/theme";
+import {colors, fontSizes, spacing} from "@/theme";
 import {router} from "expo-router";
 import React, {useState} from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
@@ -10,8 +10,9 @@ import {SafeAreaView} from "react-native-safe-area-context";
 const VerifyOtp = () => {
   const [otp, setOtp] = useState("");
 
-  const handleForgot = () => {
-    console.log("Sign in with:", {otp});
+  const handleVerify = () => {
+    // Simulate successful verification
+    router.push("/(auth)/resetPassword");
   };
 
   return (
@@ -32,14 +33,17 @@ const VerifyOtp = () => {
           OTP code verification 🔐
         </Text>
 
-        {/* Input Fields */}
+        {/* OTP Input Field */}
         <View style={styles.inputContainer}>
-          <Input
-            placeholder='Enter OTP'
-            variant='flat'
-            radius='lg'
+          <Text style={styles.inputLabel}>Enter verification code</Text>
+          <OtpInput
             value={otp}
             onValueChange={setOtp}
+            codeLength={5}
+            onInputComplete={(code: string) =>
+              console.log("Verification code entered:", code)
+            }
+            containerStyle={styles.otpContainer}
           />
         </View>
 
@@ -59,7 +63,7 @@ const VerifyOtp = () => {
           color='primary'
           fullWidth
           radius='full'
-          onPress={handleForgot}
+          onPress={handleVerify}
           style={styles.signinButton}>
           Verify & Continue
         </Button>
@@ -104,8 +108,17 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   inputContainer: {
-    width: "100%",
     marginBottom: 20,
+  },
+  inputLabel: {
+    fontSize: fontSizes.md,
+    fontWeight: "500",
+    color: colors.textSecondary,
+    marginBottom: spacing.md,
+  },
+  otpContainer: {
+    marginVertical: spacing.md,
+    alignItems: "center",
   },
   inputSpacer: {
     height: 16,

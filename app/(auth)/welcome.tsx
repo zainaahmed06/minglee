@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import {BackIcon} from "@/constants/MingleeIcons";
 import {LogoIcon} from "@/constants/OtherIcons";
 import {colors, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
@@ -9,7 +10,7 @@ import {SafeAreaView} from "react-native-safe-area-context";
 
 const Welcome = () => {
   const handleSignIn = () => {
-    router.push("/(auth)/signin");
+    router.push("/(auth)/resetPassword");
   };
 
   const handleSignUp = () => {
@@ -29,7 +30,7 @@ const Welcome = () => {
       ]}>
       {/* Back Button */}
       <Pressable style={styles.backButton} onPress={() => router.back()}>
-        <Ionicons name='chevron-back' size={24} color={colors.text} />
+        <BackIcon size={24} color={colors.text} />
       </Pressable>
 
       {/* Main Content */}

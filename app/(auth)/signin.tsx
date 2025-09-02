@@ -13,9 +13,58 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
+  // Validation states
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  // Validation functions
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      setEmailError("Email is required");
+      return false;
+    } else if (!emailRegex.test(email)) {
+      setEmailError("Please enter a valid email address");
+      return false;
+    } else {
+      setEmailError("");
+      return true;
+    }
+  };
+
+  const validatePassword = (password: string) => {
+    if (!password) {
+      setPasswordError("Password is required");
+      return false;
+    } else if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters");
+      return false;
+    } else {
+      setPasswordError("");
+      return true;
+    }
+  };
+
+  // Input change handlers
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    validateEmail(value);
+  };
+
+  const handlePasswordChange = (value: string) => {
+    setPassword(value);
+    validatePassword(value);
+  };
+
   const handleSignIn = () => {
-    // Implement sign in logic here
-    console.log("Sign in with:", {email, password});
+    // Validate one more time before submission
+    const isEmailValid = validateEmail(email);
+    const isPasswordValid = validatePassword(password);
+
+    if (isEmailValid && isPasswordValid) {
+      console.log("Sign in with:", {email, password});
+      // Implement sign in logic here
+    }
   };
 
   const handleSocialSignIn = (provider: string) => {
@@ -48,8 +97,10 @@ const SignIn = () => {
             variant='flat'
             radius='lg'
             value={email}
-            onValueChange={setEmail}
+            onValueChange={handleEmailChange}
             startContent={<MailIcon color={colors.textSecondary} />}
+            isInvalid={!!emailError}
+            errorMessage={emailError}
           />
 
           <View style={styles.inputSpacer} />
@@ -61,7 +112,7 @@ const SignIn = () => {
             radius='lg'
             type='password'
             value={password}
-            onValueChange={setPassword}
+            onValueChange={handlePasswordChange}
             secureTextEntry={isPasswordHidden}
             startContent={<LockIcon color={colors.textSecondary} />}
             endContent={
@@ -72,6 +123,8 @@ const SignIn = () => {
                 color={colors.textSecondary}
               />
             }
+            isInvalid={!!passwordError}
+            errorMessage={passwordError}
           />
         </View>
         {/* Forgot Password */}
@@ -137,6 +190,7 @@ const SignIn = () => {
   );
 };
 
+// styles remain the same
 const styles = StyleSheet.create({
   container: {
     flex: 1,

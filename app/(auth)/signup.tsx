@@ -14,14 +14,78 @@ const SignUp = () => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [agreeToPolicy, setAgreeToPolicy] = useState(false);
 
+  // Add validation states
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  // Add validation functions
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      setEmailError("Email is required");
+      return false;
+    } else if (!emailRegex.test(email)) {
+      setEmailError("Please enter a valid email address");
+      return false;
+    } else {
+      setEmailError("");
+      return true;
+    }
+  };
+
+  const validatePassword = (password: string) => {
+    if (!password) {
+      setPasswordError("Password is required");
+      return false;
+    } else if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters");
+      return false;
+    } else {
+      setPasswordError("");
+      return true;
+    }
+  };
+
+  // Update input change handlers
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    // Only validate if the field has been touched and then changed
+    if (value.trim() !== "") {
+      validateEmail(value);
+    } else {
+      setEmailError(""); // Clear error when field is empty
+    }
+  };
+
+  const handlePasswordChange = (value: string) => {
+    setPassword(value);
+    // Only validate if the field has been touched and then changed
+    if (value.trim() !== "") {
+      validatePassword(value);
+    } else {
+      setPasswordError(""); // Clear error when field is empty
+    }
+  };
+
+  // Update the checkbox change handler
+  const handlePolicyChange = (newValue: boolean) => {
+    setAgreeToPolicy(newValue);
+  };
+
   const handleSignUp = () => {
-    // Implement sign in logic here
-    console.log("Sign in with:", {email, password});
+    // Validate before submission
+    const isEmailValid = validateEmail(email);
+    const isPasswordValid = validatePassword(password);
+
+    if (isEmailValid && isPasswordValid && agreeToPolicy) {
+      console.log("Sign up with:", {email, password});
+      // Implement sign up logic here
+    }
   };
 
   const handleSocialSignUp = (provider: string) => {
-    console.log(`Sign in with ${provider}`);
-    // Implement social sign in logic here
+    console.log(`Sign up with ${provider}`);
+    // Implement social sign up logic here
   };
 
   return (
@@ -49,8 +113,10 @@ const SignUp = () => {
             variant='flat'
             radius='lg'
             value={email}
-            onValueChange={setEmail}
+            onValueChange={handleEmailChange}
             startContent={<MailIcon color={colors.textSecondary} />}
+            isInvalid={!!emailError}
+            errorMessage={emailError}
           />
 
           <View style={styles.inputSpacer} />
@@ -62,7 +128,7 @@ const SignUp = () => {
             radius='lg'
             type='password'
             value={password}
-            onValueChange={setPassword}
+            onValueChange={handlePasswordChange}
             secureTextEntry={isPasswordHidden}
             startContent={<LockIcon color={colors.textSecondary} />}
             endContent={
@@ -73,16 +139,18 @@ const SignUp = () => {
                 color={colors.textSecondary}
               />
             }
+            isInvalid={!!passwordError}
+            errorMessage={passwordError}
           />
         </View>
 
-        {/* Remember Me & Forgot Password */}
+        {/* Terms & Privacy Policy */}
         <View style={styles.forgotPasswordRow}>
-          {/* Remember Me Checkbox */}
+          {/* Privacy Policy Checkbox */}
           <View style={styles.checkboxContainer}>
             <Pressable
               style={styles.checkbox}
-              onPress={() => setAgreeToPolicy(!agreeToPolicy)}>
+              onPress={() => handlePolicyChange(!agreeToPolicy)}>
               <View
                 style={[
                   styles.checkboxInner,
@@ -103,7 +171,8 @@ const SignUp = () => {
             </Text>
           </View>
         </View>
-        {/* Sign In Button */}
+
+        {/* Sign Up Button */}
         <Button
           variant='solid'
           color='primary'
@@ -113,6 +182,7 @@ const SignUp = () => {
           style={styles.signinButton}>
           Sign Up
         </Button>
+
         {/* Divider */}
         <View style={styles.dividerContainer}>
           <View style={[styles.divider, {backgroundColor: colors.border}]} />
@@ -121,6 +191,7 @@ const SignUp = () => {
           </Text>
           <View style={[styles.divider, {backgroundColor: colors.border}]} />
         </View>
+
         {/* Social Login Buttons */}
         <View style={styles.socialButtonsContainer}>
           <Pressable
@@ -141,12 +212,13 @@ const SignUp = () => {
             <Ionicons name='logo-apple' size={24} color={colors.primary} />
           </Pressable>
         </View>
-        {/* Sign Up Link */}
+
+        {/* Sign In Link */}
         <View style={styles.signupContainer}>
           <Text style={[styles.signupText, {color: colors.textSecondary}]}>
             Already have an account ?{" "}
           </Text>
-          <Pressable onPress={() => router.push("/(auth)/signup")}>
+          <Pressable onPress={() => router.push("/(auth)/signin")}>
             <Text style={[styles.signupLink, {color: colors.primary}]}>
               Sign In
             </Text>
@@ -157,6 +229,7 @@ const SignUp = () => {
   );
 };
 
+// Styles remain the same
 const styles = StyleSheet.create({
   container: {
     flex: 1,

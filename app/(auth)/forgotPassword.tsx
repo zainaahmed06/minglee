@@ -9,10 +9,45 @@ import {SafeAreaView} from "react-native-safe-area-context";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  // Validate email function
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      setEmailError("Email is required");
+      return false;
+    } else if (!emailRegex.test(email)) {
+      setEmailError("Please enter a valid email address");
+      return false;
+    } else {
+      setEmailError("");
+      return true;
+    }
+  };
+
+  // Handle email change with validation
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    // Only validate if the field has been touched and then changed
+    if (value.trim() !== "") {
+      const isValid = validateEmail(value);
+      setIsFormValid(isValid);
+    } else {
+      setEmailError(""); // Clear error when field is empty
+      setIsFormValid(false);
+    }
+  };
 
   const handleForgot = () => {
-    console.log("Sign in with:", {email});
-    router.push("/(auth)/verifyOtp");
+    // Validate before submission
+    const isValid = validateEmail(email);
+
+    if (isValid) {
+      console.log("Password reset requested for:", email);
+      router.push("/(auth)/verifyOtp");
+    }
   };
 
   return (
@@ -36,12 +71,15 @@ const ForgotPassword = () => {
         {/* Input Fields */}
         <View style={styles.inputContainer}>
           <Input
-            placeholder='Email'
+            label='Email'
+            placeholder='Enter your email'
             variant='flat'
             radius='lg'
             value={email}
-            onValueChange={setEmail}
+            onValueChange={handleEmailChange}
             startContent={<MailIcon color={colors.textSecondary} />}
+            isInvalid={!!emailError}
+            errorMessage={emailError}
           />
         </View>
 
@@ -93,7 +131,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 28,
     fontWeight: "bold",
-    marginBottom: 32,
+    marginBottom: 16,
   },
   inputContainer: {
     width: "100%",
