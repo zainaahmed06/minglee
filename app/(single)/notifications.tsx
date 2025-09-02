@@ -1,14 +1,11 @@
-import {Stack} from "expo-router";
 import React from "react";
+import {Text, View} from "react-native";
 
 const Notifications = () => {
   return (
-    <Stack>
-      <Stack.Screen />
-      <Stack.Screen />
-      <Stack.Screen />
-      <Stack.Screen />
-    </Stack>
+    <View>
+      <Text>Notifications</Text>
+    </View>
   );
 };
 
