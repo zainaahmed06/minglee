@@ -36,6 +36,12 @@ const AccountSetup = () => {
       description:
         "Looking for fun and relaxed encounters? Select casual for carefree connections.",
     },
+    {
+      id: "serious",
+      title: "Serious Relationship 💍",
+      description:
+        "Ready for commitment and a lasting partnership? Pick serious relationship.",
+    },
   ];
   return (
     <SafeAreaView style={styles.container}>
@@ -217,11 +223,10 @@ const AccountSetup = () => {
           buttonPreviousText='Back'
           buttonBorderColor={colors.primary}>
           <Text style={[styles.heading, {color: colors.text}]}>
-            Your relationship goals 💘
+            Select relationship goals 💘
           </Text>
-          <Text style={[styles.subHeading, {color: colors.text}]}>
-            Choose the type of relationship you are seeking on Datify. Love,
-            friendship, or something in between its your choice.
+          <Text style={[styles.subHeading, {color: colors.textTertiary}]}>
+            Choose the type of relationship you are seeking on Datify.
           </Text>
 
           {mainGoals.map((goal) => (
@@ -281,7 +286,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.textTertiary,
     borderRadius: radius.lg,
-    padding: spacing.lg,
+    padding: spacing.md,
     marginBottom: spacing.md,
   },
   goalTitle: {
@@ -292,7 +297,7 @@ const styles = StyleSheet.create({
   },
   goalDescription: {
     fontSize: 14,
-    color: colors.textSecondary,
+    color: colors.textTertiary,
   },
 });
 
