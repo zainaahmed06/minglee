@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import {Input} from "@/components/Input";
 import {BirthDay} from "@/constants/MingleeIcons";
 import {colors, radius, spacing} from "@/theme";
+import Slider from "@react-native-community/slider";
 import React, {useState} from "react";
 import {StyleSheet, Text, TextInput, View} from "react-native";
 import {ProgressStep, ProgressSteps} from "react-native-progress-steps";
@@ -9,6 +10,12 @@ import {SafeAreaView} from "react-native-safe-area-context";
 
 const AccountSetup = () => {
   const [username, setUsername] = useState("");
+  const [distance, setDistance] = useState(80); // Default value for the slider
+
+  // Function to format distance value
+  const formatDistance = (value: any) => {
+    return `${Math.round(value)} km`;
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ProgressSteps
@@ -22,7 +29,11 @@ const AccountSetup = () => {
         completedProgressBarColor={colors.primary}
         completedStepIconColor={colors.primary}>
         {/* Your datify identity  */}
-        <ProgressStep>
+        <ProgressStep
+          buttonNextText='Continue'
+          buttonFillColor={colors.primary}
+          buttonPreviousText='Back'
+          buttonBorderColor={colors.primary}>
           <View>
             <Text style={[styles.heading, {color: colors.text}]}>
               Your datify identity 😎
@@ -41,7 +52,11 @@ const AccountSetup = () => {
           </View>
         </ProgressStep>
         {/* Let's celebrate you */}
-        <ProgressStep>
+        <ProgressStep
+          buttonNextText='Continue'
+          buttonFillColor={colors.primary}
+          buttonPreviousText='Back'
+          buttonBorderColor={colors.primary}>
           <Text style={[styles.heading, {color: colors.text}]}>
             Let{"'"}s celebrate you 🎂
           </Text>
@@ -103,7 +118,7 @@ const AccountSetup = () => {
           </View>
         </ProgressStep>
         {/* Be true to yourself */}
-        <ProgressStep>
+        <ProgressStep buttonFillColor={colors.primary}>
           <Text style={[styles.heading, {color: colors.text}]}>
             Be true to yourself 🌟
           </Text>
@@ -124,7 +139,11 @@ const AccountSetup = () => {
           </View>
         </ProgressStep>
         {/* Find matches nearby */}
-        <ProgressStep>
+        <ProgressStep
+          buttonNextText='Continue'
+          buttonFillColor={colors.primary}
+          buttonPreviousText='Back'
+          buttonBorderColor={colors.primary}>
           <Text style={[styles.heading, {color: colors.text}]}>
             Find matches nearby📍
           </Text>
@@ -147,13 +166,31 @@ const AccountSetup = () => {
               }}>
               Distance Preference
             </Text>
-            <Text style={[styles.subHeading, {color: colors.text}]}>
-              180 KM
+            <Text
+              style={{fontSize: 18, fontWeight: "bold", color: colors.text}}>
+              {formatDistance(distance)}
             </Text>
+          </View>
+          <View style={styles.sliderContainer}>
+            <Slider
+              style={styles.slider}
+              minimumValue={1}
+              maximumValue={200}
+              value={distance}
+              onValueChange={setDistance}
+              minimumTrackTintColor={colors.primary}
+              maximumTrackTintColor={colors.textTertiary}
+              thumbTintColor={colors.primary}
+              step={1}
+            />
           </View>
         </ProgressStep>
         {/* Show your best self */}
-        <ProgressStep>
+        <ProgressStep
+          buttonNextText='Continue'
+          buttonFillColor={colors.primary}
+          buttonPreviousText='Back'
+          buttonBorderColor={colors.primary}>
           <Text style={[styles.heading, {color: colors.text}]}>
             Your relationship goals 💘
           </Text>
@@ -175,6 +212,20 @@ const styles = StyleSheet.create({
   backButton: {
     paddingVertical: spacing.md,
     justifyContent: "center",
+    backgroundColor: "transparent",
+  },
+  backButtonText: {
+    color: colors.textSecondary,
+  },
+  button: {
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+    backgroundColor: colors.primary,
+    borderRadius: radius.full,
+  },
+  buttonText: {
+    color: colors.background,
+    fontWeight: "600",
   },
   heading: {
     fontSize: 26,
@@ -185,6 +236,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "400",
     marginBottom: 16,
+  },
+  sliderContainer: {
+    marginVertical: spacing.lg,
+    alignItems: "center",
+  },
+  slider: {
+    width: "100%",
+    height: 32,
   },
 });
 
