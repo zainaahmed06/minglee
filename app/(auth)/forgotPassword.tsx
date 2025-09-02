@@ -10,7 +10,6 @@ import {SafeAreaView} from "react-native-safe-area-context";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [isFormValid, setIsFormValid] = useState(false);
 
   // Validate email function
   const validateEmail = (email: string) => {
@@ -33,10 +32,9 @@ const ForgotPassword = () => {
     // Only validate if the field has been touched and then changed
     if (value.trim() !== "") {
       const isValid = validateEmail(value);
-      setIsFormValid(isValid);
+      console.log(isValid);
     } else {
       setEmailError(""); // Clear error when field is empty
-      setIsFormValid(false);
     }
   };
 
