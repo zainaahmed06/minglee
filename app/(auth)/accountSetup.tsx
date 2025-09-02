@@ -16,6 +16,27 @@ const AccountSetup = () => {
   const formatDistance = (value: any) => {
     return `${Math.round(value)} km`;
   };
+
+  const mainGoals = [
+    {
+      id: "dating",
+      title: "Dating 👩‍❤️‍👨",
+      description:
+        "Seeking love and meaningful connections? Choose dating for genuine relationships.",
+    },
+    {
+      id: "friendship",
+      title: "Friendship 🙌",
+      description:
+        "Seeking love and meaningful connections? Choose dating for genuine relationships.",
+    },
+    {
+      id: "casual",
+      title: "Casual 😄",
+      description:
+        "Looking for fun and relaxed encounters? Select casual for carefree connections.",
+    },
+  ];
   return (
     <SafeAreaView style={styles.container}>
       <ProgressSteps
@@ -118,7 +139,11 @@ const AccountSetup = () => {
           </View>
         </ProgressStep>
         {/* Be true to yourself */}
-        <ProgressStep buttonFillColor={colors.primary}>
+        <ProgressStep
+          buttonNextText='Continue'
+          buttonFillColor={colors.primary}
+          buttonPreviousText='Back'
+          buttonBorderColor={colors.primary}>
           <Text style={[styles.heading, {color: colors.text}]}>
             Be true to yourself 🌟
           </Text>
@@ -198,6 +223,13 @@ const AccountSetup = () => {
             Choose the type of relationship you are seeking on Datify. Love,
             friendship, or something in between its your choice.
           </Text>
+
+          {mainGoals.map((goal) => (
+            <View key={goal.id} style={styles.goalItem}>
+              <Text style={styles.goalTitle}>{goal.title}</Text>
+              <Text style={styles.goalDescription}>{goal.description}</Text>
+            </View>
+          ))}
         </ProgressStep>
       </ProgressSteps>
     </SafeAreaView>
@@ -244,6 +276,23 @@ const styles = StyleSheet.create({
   slider: {
     width: "100%",
     height: 32,
+  },
+  goalItem: {
+    borderWidth: 1,
+    borderColor: colors.textTertiary,
+    borderRadius: radius.lg,
+    padding: spacing.lg,
+    marginBottom: spacing.md,
+  },
+  goalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.text,
+    marginBottom: spacing.xs,
+  },
+  goalDescription: {
+    fontSize: 14,
+    color: colors.textSecondary,
   },
 });
 
