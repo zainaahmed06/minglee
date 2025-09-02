@@ -10,7 +10,7 @@ import {SafeAreaView} from "react-native-safe-area-context";
 
 const Welcome = () => {
   const handleSignIn = () => {
-    router.push("/(auth)/resetPassword");
+    router.push("/(auth)/signin");
   };
 
   const handleSignUp = () => {

@@ -261,9 +261,9 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   heading: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "bold",
-    marginBottom: 12,
+    marginBottom: 16,
   },
   inputContainer: {
     width: "100%",

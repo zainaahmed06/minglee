@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import {Input} from "@/components/Input";
 import {BackIcon, LockIcon, MailIcon} from "@/constants/MingleeIcons";
+import {useAuth} from "@/store/useAuth";
 import {colors, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
@@ -9,7 +10,9 @@ import {Pressable, StyleSheet, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 const SignUp = () => {
+  const {signUp} = useAuth();
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [agreeToPolicy, setAgreeToPolicy] = useState(false);
@@ -78,8 +81,15 @@ const SignUp = () => {
     const isPasswordValid = validatePassword(password);
 
     if (isEmailValid && isPasswordValid && agreeToPolicy) {
-      console.log("Sign up with:", {email, password});
-      // Implement sign up logic here
+      const data = {
+        email,
+        password,
+      };
+      setIsLoading(true);
+      signUp(data);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
     }
   };
 
@@ -178,6 +188,7 @@ const SignUp = () => {
           color='primary'
           fullWidth
           radius='full'
+          isLoading={isLoading}
           onPress={handleSignUp}
           style={styles.signinButton}>
           Sign Up
@@ -249,11 +260,10 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   heading: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "bold",
-    marginBottom: 32,
+    marginBottom: 16,
   },
-
   inputContainer: {
     width: "100%",
     marginBottom: 20,
