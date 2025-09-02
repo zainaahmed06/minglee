@@ -91,6 +91,7 @@ const SignUp = () => {
         setIsLoading(false);
       }, 2000);
     }
+    router.push("/(auth)/verifyEmail");
   };
 
   const handleSocialSignUp = (provider: string) => {

@@ -1,7 +1,20 @@
-import {Stack} from "expo-router";
+import {useAuth} from "@/store/useAuth";
+import {Redirect, Stack} from "expo-router";
 import React from "react";
 
 const AuthLayout = () => {
+  const {user, isAuthenticated, isInitialized} = useAuth();
+
+  // Show loading while initializing
+  if (!isInitialized) {
+    return null;
+  }
+
+  // If user is authenticated, redirect to tabs
+  if (isAuthenticated && user?.emailVerification) {
+    return <Redirect href='/(tabs)/home' />;
+  }
+
   return (
     <Stack initialRouteName='welcome' screenOptions={{headerShown: false}}>
       <Stack.Screen name='onboarding' />
