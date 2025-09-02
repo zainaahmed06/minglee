@@ -1,7 +1,8 @@
 import {BellIcon, LogoIcon, MenuIcon} from "@/constants/OtherIcons";
 import {colors} from "@/theme";
+import {router} from "expo-router";
 import React from "react";
-import {StyleSheet, TouchableOpacity, View} from "react-native";
+import {Pressable, StyleSheet, View} from "react-native";
 
 const MainHeader = () => {
   return (
@@ -11,12 +12,14 @@ const MainHeader = () => {
       </View>
 
       <View style={styles.rightSection}>
-        <TouchableOpacity style={styles.iconButton}>
+        <Pressable
+          onPress={() => router.push("/(single)/notifications")}
+          style={styles.iconButton}>
           <BellIcon />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
+        </Pressable>
+        <Pressable style={styles.iconButton}>
           <MenuIcon />
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

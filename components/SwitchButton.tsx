@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Pressable, StyleSheet, Text, View} from "react-native";
 
 interface SwitchButtonProps {
   tabs: {
@@ -35,7 +35,7 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({
         {tabs.map((tab, index) => {
           const isActive = activeTabIndex === index;
           return (
-            <TouchableOpacity
+            <Pressable
               key={tab.key}
               style={[
                 styles.tab,
@@ -43,8 +43,7 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({
                   ? [styles.activeTab, {backgroundColor: activeColor}]
                   : styles.inactiveTab,
               ]}
-              onPress={() => handleTabPress(index)}
-              activeOpacity={0.9}>
+              onPress={() => handleTabPress(index)}>
               <Text
                 style={[
                   styles.tabText,
@@ -53,7 +52,7 @@ const SwitchButton: React.FC<SwitchButtonProps> = ({
                 {tab.title}
                 {tab.count !== undefined && ` (${tab.count})`}
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           );
         })}
       </View>
