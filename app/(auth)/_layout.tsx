@@ -15,8 +15,12 @@ const AuthLayout = () => {
   // }
 
   return (
-    <Stack initialRouteName='accountSetup' screenOptions={{headerShown: false}}>
-      <Stack.Screen name='onboarding' />
+    <Stack
+      initialRouteName='firstOnboarding'
+      screenOptions={{headerShown: false, animation: "fade_from_bottom"}}>
+      <Stack.Screen name='firstOnboarding' />
+      <Stack.Screen name='secondOnboarding' />
+      <Stack.Screen name='thirdOnboarding' />
       <Stack.Screen name='welcome' />
       <Stack.Screen name='signin' />
       <Stack.Screen name='signup' />
