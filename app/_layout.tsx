@@ -5,6 +5,7 @@ import {Stack} from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import {useEffect} from "react";
 import {ActivityIndicator, View} from "react-native";
+import {ToastProvider} from "react-native-toast-notifications";
 
 export default function RootLayout() {
   const {initialize, isInitialized} = useAuth();
@@ -32,11 +33,25 @@ export default function RootLayout() {
     );
   }
   return (
-    <Stack
-      initialRouteName='(auth)'
-      screenOptions={{
-        headerShown: false,
-      }}
-    />
+    <ToastProvider
+      offset={50} // offset for both top and bottom toasts
+      offsetTop={50}
+      offsetBottom={50}
+      swipeEnabled={true}
+      placement='top'
+      duration={5000}
+      animationType='zoom-in'
+      animationDuration={250}
+      successColor={colors.success}
+      dangerColor={colors.danger}
+      warningColor={colors.warning}
+      normalColor={colors.backgroundSecondary}>
+      <Stack
+        initialRouteName='(auth)'
+        screenOptions={{
+          headerShown: false,
+        }}
+      />
+    </ToastProvider>
   );
 }

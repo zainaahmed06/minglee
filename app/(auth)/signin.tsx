@@ -5,12 +5,14 @@ import {useAuth} from "@/store/useAuth";
 import {colors, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
+import {useToast} from "react-native-toast-notifications";
 
 const SignIn = () => {
-  const {signIn} = useAuth();
+  const {signIn, error, clearError} = useAuth();
+  const toast = useToast();
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
@@ -19,6 +21,25 @@ const SignIn = () => {
   // Validation states
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  // Handle error display with toast
+  useEffect(() => {
+    if (error) {
+      toast.show(error.message, {
+        type: "danger",
+        placement: "top",
+        duration: 3000,
+      });
+
+      // Clear error after 3 seconds
+      const timeoutId = setTimeout(() => {
+        clearError();
+      }, 3000);
+
+      // Cleanup timeout if component unmounts or error changes
+      return () => clearTimeout(timeoutId);
+    }
+  }, [error, toast, clearError]);
 
   // Validation functions
   const validateEmail = (email: string) => {
@@ -59,7 +80,7 @@ const SignIn = () => {
     validatePassword(value);
   };
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     // Validate one more time before submission
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
@@ -70,10 +91,15 @@ const SignIn = () => {
         password,
       };
       setIsLoading(true);
-      signIn(data);
-      setTimeout(() => {
+
+      try {
+        await signIn(data);
+      } catch (error) {
+        // Error will be handled by the useEffect hook
+        console.log("Sign in error caught:", error);
+      } finally {
         setIsLoading(false);
-      }, 2000);
+      }
     }
   };
 

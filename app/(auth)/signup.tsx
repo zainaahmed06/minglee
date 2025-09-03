@@ -5,12 +5,14 @@ import {useAuth} from "@/store/useAuth";
 import {colors, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
+import {useToast} from "react-native-toast-notifications";
 
 const SignUp = () => {
-  const {signUp} = useAuth();
+  const {signUp, error, clearError} = useAuth();
+  const toast = useToast();
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
@@ -20,6 +22,25 @@ const SignUp = () => {
   // Add validation states
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  // Handle error display with toast
+  useEffect(() => {
+    if (error) {
+      toast.show(error.message, {
+        type: "error",
+        placement: "top",
+        duration: 3000,
+      });
+
+      // Clear error after 3 seconds
+      const timeoutId = setTimeout(() => {
+        clearError();
+      }, 3000);
+
+      // Cleanup timeout if component unmounts or error changes
+      return () => clearTimeout(timeoutId);
+    }
+  }, [error, toast, clearError]);
 
   // Add validation functions
   const validateEmail = (email: string) => {
@@ -75,10 +96,19 @@ const SignUp = () => {
     setAgreeToPolicy(newValue);
   };
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     // Validate before submission
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
+
+    if (!agreeToPolicy) {
+      toast.show("Please agree to the Privacy Policy to continue", {
+        type: "warning",
+        placement: "top",
+        duration: 3000,
+      });
+      return;
+    }
 
     if (isEmailValid && isPasswordValid && agreeToPolicy) {
       const data = {
@@ -86,12 +116,18 @@ const SignUp = () => {
         password,
       };
       setIsLoading(true);
-      signUp(data);
-      setTimeout(() => {
+
+      try {
+        await signUp(data);
+        // Only navigate if signup is successful
+        router.push("/(auth)/verifyEmail");
+      } catch (error) {
+        // Error will be handled by the useEffect hook
+        console.log("Sign up error caught:", error);
+      } finally {
         setIsLoading(false);
-      }, 2000);
+      }
     }
-    router.push("/(auth)/verifyEmail");
   };
 
   const handleSocialSignUp = (provider: string) => {
