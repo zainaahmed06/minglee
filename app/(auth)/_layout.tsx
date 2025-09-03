@@ -1,18 +1,36 @@
 import {useAuth} from "@/store/useAuth";
-import {Redirect, Stack} from "expo-router";
-import React from "react";
+import {Stack, useRouter, useSegments} from "expo-router";
+import React, {useEffect} from "react";
 
 const AuthLayout = () => {
   const {user, isAuthenticated, isInitialized} = useAuth();
+  const router = useRouter();
+  const segments = useSegments();
+
+  useEffect(() => {
+    if (!isInitialized) return;
+
+    const inAuthGroup = segments[0] === "(auth)";
+
+    if (isAuthenticated && user?.emailVerification) {
+      // User is fully authenticated and verified - redirect to main app
+      if (inAuthGroup) {
+        router.replace("/(tabs)/home");
+      }
+    } else if (isAuthenticated && user && !user.emailVerification) {
+      // User is authenticated but not verified - redirect to email verification
+      if (segments[1] !== "verifyEmail") {
+        router.replace("/(auth)/verifyEmail");
+      }
+    } else if (!isAuthenticated) {
+      // User is not authenticated - stay in auth flow
+      // No need to redirect as we're already in auth layout
+    }
+  }, [isInitialized, isAuthenticated, user, segments, router]);
 
   // Show loading while initializing
   if (!isInitialized) {
     return null;
-  }
-
-  // If user is authenticated, redirect to tabs
-  if (isAuthenticated) {
-    return <Redirect href='/(tabs)/home' />;
   }
 
   return (
@@ -28,6 +46,7 @@ const AuthLayout = () => {
       <Stack.Screen name='forgotPassword' />
       <Stack.Screen name='resetPassword' />
       <Stack.Screen name='verifyOtp' />
+      <Stack.Screen name='verifyEmail' />
       <Stack.Screen name='accountSetup' />
     </Stack>
   );
