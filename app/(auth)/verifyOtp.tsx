@@ -1,18 +1,125 @@
 import Button from "@/components/Button";
 import OtpInput from "@/components/OtpInput";
 import {BackIcon} from "@/constants/MingleeIcons";
+import {functions} from "@/services/appwrite";
 import {colors, fontSizes, spacing} from "@/theme";
-import {router} from "expo-router";
-import React, {useState} from "react";
+import {router, useLocalSearchParams} from "expo-router";
+import React, {useEffect, useState} from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 const VerifyOtp = () => {
   const [otp, setOtp] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const params = useLocalSearchParams();
+  const email = params.email as string;
 
-  const handleVerify = () => {
-    // Simulate successful verification
-    router.push("/(auth)/resetPassword");
+  // Check if email parameter exists
+  useEffect(() => {
+    if (!email) {
+      setError("Email parameter missing. Please go back and try again.");
+    }
+  }, [email]);
+
+  const handleOtpChange = (value: string) => {
+    setOtp(value);
+    // Clear error when user starts typing
+    if (error) {
+      setError("");
+    }
+  };
+
+  const handleResendOtp = async () => {
+    if (!email) {
+      setError("Email not found. Please go back and try again.");
+      return;
+    }
+
+    try {
+      const result = await functions.createExecution(
+        "68b7d2ca00049128cf12",
+        JSON.stringify({email}),
+        false,
+        "/send-otp"
+      );
+
+      console.log("Resend OTP result:", result);
+
+      let responseData;
+      try {
+        responseData = JSON.parse(result.responseBody);
+      } catch (parseError) {
+        console.error("Error parsing response:", parseError);
+        setError("An error occurred while resending OTP.");
+        return;
+      }
+
+      if (responseData.success === false) {
+        setError(responseData.message || "Failed to resend OTP.");
+      } else {
+        // Show success message or handle success
+        console.log("OTP resent successfully");
+        setError(""); // Clear any existing errors
+        // You could show a success toast here
+      }
+    } catch (error) {
+      console.error("Error resending OTP:", error);
+      setError("An error occurred while resending OTP.");
+    }
+  };
+
+  const handleVerify = async () => {
+    if (!otp || otp.length !== 5) {
+      setError("Please enter a valid 5-digit OTP");
+      return;
+    }
+
+    setIsLoading(true);
+    // Only clear error when we're about to make a request
+    setError("");
+
+    try {
+      const result = await functions.createExecution(
+        "68b7d2ca00049128cf12",
+        JSON.stringify({
+          email: email,
+          otp: otp,
+        }),
+        false,
+        "/verify-otp"
+      );
+
+      console.log("OTP verification result:", result);
+
+      // Parse the response body
+      let responseData;
+      try {
+        responseData = JSON.parse(result.responseBody);
+      } catch (parseError) {
+        console.error("Error parsing response:", parseError);
+        setError("An error occurred. Please try again.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Check if the verification was successful
+      if (responseData.success === false) {
+        // Show the actual error message from the response
+        setError(responseData.message || "Invalid OTP code. Please try again.");
+      } else {
+        // Navigate to reset password screen with email parameter
+        router.push({
+          pathname: "/(auth)/resetPassword",
+          params: {email: email},
+        });
+      }
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      setError("An error occurred. Please try again.");
+    }
+
+    setIsLoading(false);
   };
 
   return (
@@ -38,19 +145,20 @@ const VerifyOtp = () => {
           <Text style={styles.inputLabel}>Enter verification code</Text>
           <OtpInput
             value={otp}
-            onValueChange={setOtp}
+            onValueChange={handleOtpChange}
             codeLength={5}
             onInputComplete={(code: string) =>
               console.log("Verification code entered:", code)
             }
             containerStyle={styles.otpContainer}
           />
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
         </View>
 
         {/* Verify OTP */}
         <View style={styles.forgotPasswordRow}>
-          {/* Forgot Password Link */}
-          <Pressable onPress={() => router.push("/(auth)/forgotPassword")}>
+          {/* Resend Code Link */}
+          <Pressable onPress={handleResendOtp}>
             <Text style={[styles.forgotPasswordLink, {color: colors.primary}]}>
               Resend Code ?
             </Text>
@@ -63,6 +171,7 @@ const VerifyOtp = () => {
           color='primary'
           fullWidth
           radius='full'
+          isLoading={isLoading}
           onPress={handleVerify}
           style={styles.signinButton}>
           Verify & Continue
@@ -119,6 +228,12 @@ const styles = StyleSheet.create({
   otpContainer: {
     marginVertical: spacing.md,
     alignItems: "center",
+  },
+  errorText: {
+    color: colors.danger,
+    fontSize: fontSizes.sm,
+    marginTop: spacing.sm,
+    textAlign: "center",
   },
   inputSpacer: {
     height: 16,

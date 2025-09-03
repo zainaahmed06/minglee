@@ -1,15 +1,25 @@
 import Button from "@/components/Button";
 import {Input} from "@/components/Input";
 import {BackIcon, MailIcon} from "@/constants/MingleeIcons";
+import {functions} from "@/services/appwrite";
 import {colors, spacing} from "@/theme";
 import {router} from "expo-router";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [functionResult, setFunctionResult] = useState<any>(null);
+
+  // Log the function result whenever it changes
+  useEffect(() => {
+    if (functionResult) {
+      console.log("Function result updated:", functionResult);
+    }
+  }, [functionResult]);
 
   // Validate email function
   const validateEmail = (email: string) => {
@@ -38,14 +48,59 @@ const ForgotPassword = () => {
     }
   };
 
-  const handleForgot = () => {
+  const handleForgot = async () => {
+    setIsLoading(true);
+    // Clear any previous errors
+    setEmailError("");
+
     // Validate before submission
     const isValid = validateEmail(email);
 
     if (isValid) {
-      console.log("Password reset requested for:", email);
-      router.push("/(auth)/verifyOtp");
+      try {
+        const result = await functions.createExecution(
+          "68b7d2ca00049128cf12",
+          JSON.stringify({email}),
+          false,
+          "/send-otp"
+        );
+
+        console.log("Function execution result:", result);
+
+        // Parse the response body
+        let responseData;
+        try {
+          responseData = JSON.parse(result.responseBody);
+        } catch (parseError) {
+          console.error("Error parsing response:", parseError);
+          setEmailError("An error occurred. Please try again.");
+          setIsLoading(false);
+          return;
+        }
+
+        // Save the result to state
+        setFunctionResult(responseData);
+
+        // Check if the operation was successful
+        if (responseData.success === false) {
+          // Show the actual error message from the response
+          setEmailError(
+            responseData.message || "No account found with this email address"
+          );
+        } else {
+          // Navigate to verify OTP screen with email as parameter
+          router.push({
+            pathname: "/(auth)/verifyOtp",
+            params: {email: email},
+          });
+        }
+      } catch (error) {
+        console.error("Error executing function:", error);
+        setEmailError("An error occurred. Please try again.");
+      }
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -87,6 +142,7 @@ const ForgotPassword = () => {
           color='primary'
           fullWidth
           radius='full'
+          isLoading={isLoading}
           onPress={handleForgot}
           style={styles.signinButton}>
           Continue
