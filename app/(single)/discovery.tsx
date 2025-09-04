@@ -75,10 +75,7 @@ const DiscoveryHeader: React.FC = () => (
 
 // Preference item component
 const PreferenceItemComponent: React.FC<{item: PreferenceItem}> = ({item}) => (
-  <Pressable
-    style={styles.preferenceItem}
-    onPress={item.onPress}
-    android_ripple={{color: colors.backgroundSecondary}}>
+  <Pressable style={styles.preferenceItem} onPress={item.onPress}>
     <View style={styles.preferenceContent}>
       <Text style={styles.preferenceTitle}>{item.title}</Text>
       <Text style={styles.preferenceSubtitle}>{item.subtitle}</Text>
@@ -123,8 +120,7 @@ const SelectorButton: React.FC<SelectorButtonProps> = ({
 }) => (
   <Pressable
     style={[styles.selectorButton, isSelected && styles.selectorButtonSelected]}
-    onPress={onPress}
-    android_ripple={{color: "rgba(255,255,255,0.1)"}}>
+    onPress={onPress}>
     <Text
       style={[
         styles.selectorButtonText,
@@ -377,7 +373,6 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xl,
   },
   preferencesContainer: {
-    marginHorizontal: spacing.md,
     marginTop: spacing.lg,
   },
   preferenceItem: {

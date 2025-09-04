@@ -1,3 +1,4 @@
+import {LogoIcon} from "@/constants/OtherIcons";
 import {colors, fontSizes, radius, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
@@ -36,14 +37,14 @@ const SubscriptionHeader: React.FC = () => (
 const CurrentPlanHeader: React.FC = () => (
   <View style={styles.planHeader}>
     <View style={styles.planTitleContainer}>
-      <Text style={styles.planBrandName}>Datify</Text>
+      <LogoIcon />
       <View style={styles.premiumBadge}>
         <Text style={styles.premiumText}>Premium</Text>
       </View>
     </View>
     <View style={styles.priceContainer}>
       <Text style={styles.priceText}>$9.99</Text>
-      <Text style={styles.periodText}>/ month</Text>
+      <Text style={styles.periodText}>/ Month</Text>
     </View>
   </View>
 );
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: spacing.md,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xl,
   },
   contentContainer: {
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: spacing.md,
     paddingTop: spacing.xl,
   },
   planHeader: {
@@ -162,8 +163,10 @@ const styles = StyleSheet.create({
   },
   planTitleContainer: {
     flexDirection: "row",
+    gap: spacing.md,
     alignItems: "center",
-    marginBottom: spacing.lg,
+
+    marginBottom: spacing.sm,
   },
   planBrandName: {
     fontSize: fontSizes.xl,
@@ -173,7 +176,7 @@ const styles = StyleSheet.create({
   },
   premiumBadge: {
     backgroundColor: colors.primary,
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
     borderRadius: radius.full,
   },
@@ -197,12 +200,17 @@ const styles = StyleSheet.create({
     marginLeft: spacing.xs,
   },
   featuresContainer: {
+    backgroundColor: colors.surfaceSecondary,
+    padding: spacing.md,
+    borderRadius: radius.md,
+    borderWidth: 2,
+    borderColor: colors.primary,
     marginBottom: spacing.xl,
   },
   featureItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: spacing.md,
+    paddingVertical: spacing.sm,
   },
   checkIcon: {
     marginRight: spacing.md,
@@ -215,13 +223,11 @@ const styles = StyleSheet.create({
   planStatusContainer: {
     alignItems: "center",
     paddingTop: spacing.xl,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
   },
   planStatusTitle: {
     fontSize: fontSizes.lg,
     fontWeight: "600",
-    color: colors.textSecondary,
+    color: colors.text,
     marginBottom: spacing.lg,
   },
   expirationText: {

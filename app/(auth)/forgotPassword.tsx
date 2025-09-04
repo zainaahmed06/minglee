@@ -1,8 +1,9 @@
 import Button from "@/components/Button";
 import {Input} from "@/components/Input";
-import {BackIcon, MailIcon} from "@/constants/MingleeIcons";
+import {MailIcon} from "@/constants/MingleeIcons";
 import {functions} from "@/services/appwrite";
 import {colors, spacing} from "@/theme";
+import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
 import React, {useEffect, useState} from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
@@ -118,7 +119,7 @@ const ForgotPassword = () => {
       ]}>
       {/* Back Button */}
       <Pressable style={styles.backButton} onPress={() => router.back()}>
-        <BackIcon color={colors.text} />
+        <Ionicons name='arrow-back' size={24} color={colors.text} />
       </Pressable>
 
       {/* Main Content */}

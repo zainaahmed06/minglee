@@ -1,5 +1,3 @@
-import Button from "@/components/Button";
-import {BackIcon} from "@/constants/MingleeIcons";
 import {colors, fontSizes, radius, spacing} from "@/theme";
 import {
   Notifications as NotificationsType,
@@ -15,6 +13,7 @@ import {FlatList, Pressable, StyleSheet, Text, View} from "react-native";
 import heartAnimation from "@/lotties/Heart.json";
 import matchAnimation from "@/lotties/Match.json";
 import messageAnimation from "@/lotties/Message.json";
+import {Ionicons} from "@expo/vector-icons";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 const Notifications = () => {
@@ -34,7 +33,7 @@ const Notifications = () => {
         $databaseId: "minglee",
         $sequence: 1,
         user_id: "user123",
-        type: NotificationType.MATCH,
+        NotificationType: NotificationType.MATCH,
         title: "New Match!",
         body: "You and Sarah have matched! Start a conversation now.",
         is_read: false,
@@ -49,7 +48,7 @@ const Notifications = () => {
         $databaseId: "minglee",
         $sequence: 2,
         user_id: "user123",
-        type: NotificationType.LIKE,
+        NotificationType: NotificationType.LIKE,
         title: "New Like",
         body: "Alex liked your profile! Check them out.",
         is_read: true,
@@ -68,7 +67,7 @@ const Notifications = () => {
         $databaseId: "minglee",
         $sequence: 3,
         user_id: "user123",
-        type: NotificationType.MESSAGE,
+        NotificationType: NotificationType.MESSAGE,
         title: "New Message",
         body: "Jessica sent you a new message: 'Hey there! How's your day going?'",
         is_read: false,
@@ -87,7 +86,7 @@ const Notifications = () => {
         $databaseId: "minglee",
         $sequence: 4,
         user_id: "user123",
-        type: NotificationType.MATCH,
+        NotificationType: NotificationType.MATCH,
         title: "New Match!",
         body: "You and Mike have matched! Start a conversation now.",
         is_read: true,
@@ -102,15 +101,6 @@ const Notifications = () => {
     }, 1000);
   }, []);
 
-  const handleMarkAllAsRead = () => {
-    setNotifications((prevNotifications) =>
-      prevNotifications.map((notification) => ({
-        ...notification,
-        is_read: true,
-      }))
-    );
-  };
-
   const handleNotificationPress = (notification: NotificationsType) => {
     // Mark notification as read
     setNotifications((prevNotifications) =>
@@ -120,7 +110,7 @@ const Notifications = () => {
     );
 
     // Navigate based on notification type
-    switch (notification.type) {
+    switch (notification.NotificationType) {
       case NotificationType.MATCH:
         router.push("/matches");
         break;
@@ -152,8 +142,8 @@ const Notifications = () => {
     }
   };
 
-  const getNotificationAnimation = (type: NotificationType) => {
-    switch (type) {
+  const getNotificationAnimation = (notificationType: NotificationType) => {
+    switch (notificationType) {
       case NotificationType.MATCH:
         return matchAnimation;
       case NotificationType.LIKE:
@@ -175,7 +165,7 @@ const Notifications = () => {
         onPress={() => handleNotificationPress(item)}>
         <View style={styles.notificationIcon}>
           <LottieView
-            source={getNotificationAnimation(item.type)}
+            source={getNotificationAnimation(item.NotificationType)}
             autoPlay
             loop
             style={styles.lottieAnimation}
@@ -205,17 +195,14 @@ const Notifications = () => {
   const renderHeader = () => {
     return (
       <View style={styles.header}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
-          <BackIcon color={colors.text} size={28} />
+        <Pressable
+          style={styles.backButton}
+          onPress={() => router.back()}
+          hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+          <Ionicons name='arrow-back' size={24} color={colors.text} />
         </Pressable>
         <Text style={styles.headerTitle}>Notifications</Text>
-        <Button
-          variant='ghost'
-          color='primary'
-          size='sm'
-          onPress={handleMarkAllAsRead}>
-          Mark all as read
-        </Button>
+        <View style={styles.placeholder} />
       </View>
     );
   };
@@ -274,17 +261,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: spacing.md,
-    paddingTop: spacing.xl,
-    paddingBottom: spacing.md,
-    backgroundColor: colors.background,
+    paddingVertical: spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
   },
   backButton: {
     padding: spacing.xs,
   },
   headerTitle: {
-    fontSize: fontSizes.xl,
+    fontSize: fontSizes.lg,
     fontWeight: "600",
     color: colors.text,
+  },
+  placeholder: {
+    width: 32,
   },
   listContent: {
     padding: spacing.md,

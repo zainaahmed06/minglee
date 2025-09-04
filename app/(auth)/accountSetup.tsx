@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: spacing.md,
     backgroundColor: colors.primary,
     borderRadius: radius.full,
   },

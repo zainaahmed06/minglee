@@ -74,10 +74,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: spacing.lg,
-    paddingHorizontal: spacing.lg,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    paddingVertical: spacing.xs,
+    paddingHorizontal: spacing.md,
   },
   notificationTitle: {
     fontSize: fontSizes.md,

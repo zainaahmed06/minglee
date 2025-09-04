@@ -63,10 +63,7 @@ const SecurityToggleComponent: React.FC<{
 const SecurityNavigationComponent: React.FC<{
   item: SecurityNavigationItemType;
 }> = ({item}) => (
-  <Pressable
-    style={styles.securityItem}
-    onPress={item.onPress}
-    android_ripple={{color: colors.backgroundSecondary}}>
+  <Pressable style={styles.securityItem} onPress={item.onPress}>
     <View style={styles.navigationContent}>
       <Text
         style={[
@@ -223,7 +220,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: spacing.md,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
@@ -246,17 +243,14 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xl,
   },
   securityContainer: {
-    marginHorizontal: spacing.lg,
+    marginHorizontal: spacing.md,
     marginTop: spacing.lg,
   },
   securityItem: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingVertical: spacing.lg,
-    paddingHorizontal: spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    paddingVertical: spacing.md,
   },
   securityTitle: {
     fontSize: fontSizes.md,

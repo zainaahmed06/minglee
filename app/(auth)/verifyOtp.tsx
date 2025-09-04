@@ -1,9 +1,9 @@
 import Button from "@/components/Button";
 import OtpInput from "@/components/OtpInput";
-import {BackIcon} from "@/constants/MingleeIcons";
 import {functions} from "@/services/appwrite";
 import {useAuth} from "@/store/useAuth";
 import {colors, fontSizes, spacing} from "@/theme";
+import {Ionicons} from "@expo/vector-icons";
 import {router, useLocalSearchParams} from "expo-router";
 import React, {useEffect, useState} from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
@@ -176,7 +176,7 @@ const VerifyOtp = () => {
       ]}>
       {/* Back Button */}
       <Pressable style={styles.backButton} onPress={() => router.back()}>
-        <BackIcon color={colors.text} />
+        <Ionicons name='arrow-back' size={24} color={colors.text} />
       </Pressable>
 
       {/* Main Content */}

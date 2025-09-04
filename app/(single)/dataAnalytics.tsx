@@ -36,10 +36,7 @@ const AnalyticsHeader: React.FC = () => (
 
 // Analytics item component
 const AnalyticsItemComponent: React.FC<{item: AnalyticsItem}> = ({item}) => (
-  <Pressable
-    style={styles.analyticsItem}
-    onPress={item.onPress}
-    android_ripple={{color: colors.backgroundSecondary}}>
+  <Pressable style={styles.analyticsItem} onPress={item.onPress}>
     <View style={styles.analyticsContent}>
       <Text style={styles.analyticsTitle}>{item.title}</Text>
       <Text style={styles.analyticsSubtitle}>{item.subtitle}</Text>
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: spacing.md,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
@@ -143,9 +140,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingVertical: spacing.lg,
-    paddingHorizontal: spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
   },
   analyticsContent: {
     flex: 1,

@@ -43,8 +43,7 @@ const SettingsHeader: React.FC = () => (
 const UpgradeBanner: React.FC = () => (
   <Pressable
     style={styles.upgradeBanner}
-    onPress={() => router.push("/(single)/subscriptions")}
-    android_ripple={{color: "rgba(255,255,255,0.1)"}}>
+    onPress={() => router.push("/(single)/subscriptions")}>
     <View style={styles.upgradeContent}>
       <View style={styles.upgradeIconContainer}>
         <View style={styles.upgradeIcon}>
@@ -69,10 +68,7 @@ const UpgradeBanner: React.FC = () => (
 
 // Settings item component
 const SettingsItemComponent: React.FC<{item: SettingsItem}> = ({item}) => (
-  <Pressable
-    style={styles.settingsItem}
-    onPress={item.onPress}
-    android_ripple={{color: colors.backgroundSecondary}}>
+  <Pressable style={styles.settingsItem} onPress={item.onPress}>
     <View style={styles.settingsItemLeft}>
       <View style={styles.settingsIconContainer}>
         <Ionicons name={item.icon} size={24} color={colors.textSecondary} />
@@ -134,11 +130,10 @@ const Settings: React.FC = () => {
     },
     {
       id: "notifications",
-      title: "Notification",
+      title: "Notifications Settings",
       icon: "notifications-outline",
       onPress: () => {
-        console.log("Navigate to Notifications");
-        // router.push('/settings/notifications');
+        router.push("/notificationsSetting");
       },
     },
     {
@@ -146,7 +141,7 @@ const Settings: React.FC = () => {
       title: "Account & Security",
       icon: "shield-checkmark-outline",
       onPress: () => {
-        console.log("Account Security");
+        router.push("/accountSecurity");
       },
     },
     {
@@ -162,17 +157,7 @@ const Settings: React.FC = () => {
       title: "App Appearance",
       icon: "eye-outline",
       onPress: () => {
-        console.log("Navigate to App Appearance");
-        // router.push('/settings/appearance');
-      },
-    },
-    {
-      id: "integrations",
-      title: "Third Party Integrations",
-      icon: "git-network-outline",
-      onPress: () => {
-        console.log("Navigate to Third Party Integrations");
-        // router.push('/settings/integrations');
+        router.push("/appAppearence");
       },
     },
     {
@@ -188,8 +173,7 @@ const Settings: React.FC = () => {
       title: "Help & Support",
       icon: "help-circle-outline",
       onPress: () => {
-        console.log("Navigate to Help & Support");
-        // router.push('/settings/support');
+        router.push("/helpAndSupport");
       },
     },
   ];
@@ -213,6 +197,7 @@ const Settings: React.FC = () => {
           <Button
             style={{marginTop: spacing.lg}}
             variant='solid'
+            onPress={handleLogout}
             color='danger'>
             Log Out
           </Button>

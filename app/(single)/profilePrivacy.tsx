@@ -52,10 +52,7 @@ const SectionHeader: React.FC<{title: string}> = ({title}) => (
 const PrivacyNavigationComponent: React.FC<{item: PrivacyNavigationItem}> = ({
   item,
 }) => (
-  <Pressable
-    style={styles.privacyItem}
-    onPress={item.onPress}
-    android_ripple={{color: colors.backgroundSecondary}}>
+  <Pressable style={styles.privacyItem} onPress={item.onPress}>
     <View style={styles.privacyContent}>
       <Text style={styles.privacyTitle}>{item.title}</Text>
       {item.subtitle && (
@@ -250,7 +247,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: spacing.md,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
@@ -281,7 +278,6 @@ const styles = StyleSheet.create({
     color: colors.textTertiary,
     marginBottom: spacing.md,
     marginHorizontal: spacing.lg,
-    textTransform: "uppercase",
     letterSpacing: 0.5,
   },
   sectionContainer: {
@@ -292,9 +288,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingVertical: spacing.lg,
-    paddingHorizontal: spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
   },
   privacyContent: {
     flex: 1,

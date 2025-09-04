@@ -44,8 +44,7 @@ const VisibilityOptionComponent: React.FC<{
   return (
     <Pressable
       style={styles.optionContainer}
-      onPress={() => onSelect(option.value)}
-      android_ripple={{color: colors.backgroundSecondary}}>
+      onPress={() => onSelect(option.value)}>
       <Ionicons
         name={isSelected ? "radio-button-on" : "radio-button-off"}
         size={24}
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: spacing.md,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
@@ -150,7 +149,7 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xl,
   },
   contentContainer: {
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: spacing.md,
     paddingTop: spacing.xl,
   },
   instructionText: {

@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import {Input} from "@/components/Input";
-import {BackIcon, LockIcon, MailIcon} from "@/constants/MingleeIcons";
+import {LockIcon, MailIcon} from "@/constants/MingleeIcons";
 import {functions} from "@/services/appwrite";
 import {useAuth} from "@/store/useAuth";
 import {colors, spacing} from "@/theme";
@@ -197,7 +197,7 @@ const SignIn = () => {
       ]}>
       {/* Back Button */}
       <Pressable style={styles.backButton} onPress={() => router.back()}>
-        <BackIcon color={colors.text} size={24} />
+        <Ionicons name='arrow-back' size={24} color={colors.text} />
       </Pressable>
 
       {/* Main Content */}

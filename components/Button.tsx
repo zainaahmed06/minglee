@@ -119,7 +119,7 @@ const Button = forwardRef<any, ButtonProps>(
         },
         md: {
           height: spacing.xxl,
-          paddingHorizontal: spacing.lg,
+          paddingHorizontal: spacing.md,
           fontSize: fontSizes.md,
           iconSize: 18,
         },

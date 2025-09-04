@@ -1,5 +1,4 @@
 import Button from "@/components/Button";
-import {BackIcon} from "@/constants/MingleeIcons";
 import {LogoIcon} from "@/constants/OtherIcons";
 import {colors, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
@@ -30,7 +29,7 @@ const Welcome = () => {
       ]}>
       {/* Back Button */}
       <Pressable style={styles.backButton} onPress={() => router.back()}>
-        <BackIcon size={24} color={colors.text} />
+        <Ionicons name='arrow-back' size={24} color={colors.text} />
       </Pressable>
 
       {/* Main Content */}

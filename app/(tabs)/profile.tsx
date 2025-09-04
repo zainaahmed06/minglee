@@ -1,46 +1,23 @@
-import Button from "@/components/Button";
-import SwitchButton from "@/components/SwitchButton";
-import {useAuth} from "@/store/useAuth";
+import Header from "@/components/Header";
+import {colors, spacing} from "@/theme";
+import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet} from "react-native";
+import {SafeAreaView} from "react-native-safe-area-context";
 
 const Profile = () => {
-  const {signOut} = useAuth();
-  const tabs = [
-    {
-      key: "pushNotifications",
-      title: "Push Notifications",
-      count: 85,
-    },
-    {
-      key: "emailNotifications",
-      title: "Email Notifications",
-      count: 24,
-    },
-  ];
-
-  const handleTabPress = (index: number) => {
-    console.log(`Tab ${index} pressed`);
-    // You can add your logic here to change content based on selected tab
-  };
-
   return (
-    <View style={styles.container}>
-      <SwitchButton
-        tabs={tabs}
-        activeColor='#8A4FFF'
-        inactiveColor='#F5F5F5'
-        onTabPress={handleTabPress}
-        initialTabIndex={0}
+    <SafeAreaView style={styles.container}>
+      <Header
+        title='Profile'
+        leftIcon={<Ionicons name='arrow-back' size={24} color={colors.text} />}
+        rightIcon={
+          <Ionicons name='settings-outline' size={24} color={colors.text} />
+        }
+        onRightPress={() => router.push("/(single)/settings")}
       />
-      <Button
-        variant='flat'
-        color='primary'
-        onPress={() => router.push("/(single)/notificationsSetting")}>
-        Sign Out
-      </Button>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -48,7 +25,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    paddingTop: 40,
+    paddingHorizontal: spacing.md,
   },
 });
 
