@@ -117,16 +117,19 @@ const SignUp = () => {
       try {
         // First create the user account using signUp function from useAuth
         const signUpData = {
-          email,
+          email: email.trim(),
           password,
         };
 
         await signUp(signUpData);
 
-        // After successful account creation, send OTP
+        // After successful account creation, send OTP for email verification
         const result = await functions.createExecution(
           "68b7d2ca00049128cf12",
-          JSON.stringify({email, "otp-type": "signup"}),
+          JSON.stringify({
+            email: email.trim(),
+            "otp-type": "signup",
+          }),
           false,
           "/send-otp"
         );
@@ -138,37 +141,68 @@ const SignUp = () => {
         try {
           responseData = JSON.parse(result.responseBody);
         } catch (parseError) {
-          console.error("Error parsing response:", parseError);
-          toast.show("An error occurred. Please try again.", {
-            type: "error",
-            placement: "top",
-            duration: 3000,
-          });
+          console.error("Error parsing OTP response:", parseError);
+          toast.show(
+            "Account created but failed to send verification code. Please try again.",
+            {
+              type: "error",
+              placement: "top",
+              duration: 4000,
+            }
+          );
           setIsLoading(false);
           return;
         }
 
         // Check if OTP was sent successfully
         if (responseData.success === false) {
-          toast.show(responseData.message || "Failed to send OTP", {
+          toast.show(
+            responseData.message || "Failed to send verification code",
+            {
+              type: "error",
+              placement: "top",
+              duration: 3000,
+            }
+          );
+        } else {
+          // Success - navigate to verify OTP screen
+          toast.show("Account created! Verification code sent to your email", {
+            type: "success",
+            placement: "top",
+            duration: 2000,
+          });
+
+          router.push({
+            pathname: "/(auth)/verifyOtp",
+            params: {
+              email: email.trim(),
+              type: "signup",
+            },
+          });
+        }
+      } catch (error: any) {
+        console.error("Error during signup process:", error);
+
+        // Handle specific signup errors
+        if (
+          error.message?.includes("email") &&
+          error.message?.includes("exists")
+        ) {
+          toast.show(
+            "Email already exists. Please use a different email or sign in.",
+            {
+              type: "error",
+              placement: "top",
+              duration: 4000,
+            }
+          );
+        } else {
+          toast.show("An error occurred during signup. Please try again.", {
             type: "error",
             placement: "top",
             duration: 3000,
           });
-        } else {
-          // Navigate to verify OTP screen
-          router.push({
-            pathname: "/(auth)/verifyOtp",
-            params: {email: email, type: "signup"},
-          });
         }
-      } catch (error) {
-        console.error("Error during signup process:", error);
-        toast.show("An error occurred. Please try again.", {
-          type: "error",
-          placement: "top",
-          duration: 3000,
-        });
       } finally {
         setIsLoading(false);
       }

@@ -11,20 +11,25 @@ const AuthLayout = () => {
     if (!isInitialized) return;
 
     const inAuthGroup = segments[0] === "(auth)";
+    const currentScreen = segments[1];
 
     if (isAuthenticated && otpVerified) {
       // User is fully authenticated and verified - redirect to main app
-      if (inAuthGroup) {
+      if (inAuthGroup && currentScreen !== "accountSetup") {
         router.replace("/(tabs)/home");
       }
     } else if (isAuthenticated && !otpVerified) {
       // User is authenticated but OTP not verified - redirect to OTP verification
-      if (segments[1] !== "verifyOtp") {
-        router.replace("/(auth)/verifyOtp");
+      // Only redirect if not already on verifyOtp screen
+      if (currentScreen !== "verifyOtp") {
+        // Don't auto-redirect to verifyOtp as user needs to come from signin/signup/forgot flows
+        // with proper parameters (email and type)
+        console.log("User authenticated but OTP not verified");
       }
     } else if (!isAuthenticated) {
       // User is not authenticated - stay in auth flow
-      // No need to redirect as we're already in auth layout
+      // Allow them to navigate freely within auth screens
+      console.log("User not authenticated - staying in auth flow");
     }
   }, [isInitialized, isAuthenticated, otpVerified, segments, router]);
 
@@ -46,7 +51,6 @@ const AuthLayout = () => {
       <Stack.Screen name='forgotPassword' />
       <Stack.Screen name='resetPassword' />
       <Stack.Screen name='verifyOtp' />
-      <Stack.Screen name='verifyEmail' />
       <Stack.Screen name='accountSetup' />
     </Stack>
   );

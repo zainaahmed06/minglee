@@ -18,12 +18,16 @@ const VerifyOtp = () => {
   const otpType = params.type as string;
   const {setOtpVerified} = useAuth();
 
-  // Check if email parameter exists
+  // Check if required parameters exist
   useEffect(() => {
     if (!email) {
       setError("Email parameter missing. Please go back and try again.");
+    } else if (!otpType) {
+      setError("Verification type missing. Please go back and try again.");
+    } else if (!["signin", "signup", "reset"].includes(otpType)) {
+      setError("Invalid verification type. Please go back and try again.");
     }
-  }, [email]);
+  }, [email, otpType]);
 
   const handleOtpChange = (value: string) => {
     setOtp(value);
@@ -34,15 +38,22 @@ const VerifyOtp = () => {
   };
 
   const handleResendOtp = async () => {
-    if (!email && !otpType) {
-      setError("Email not found. Please go back and try again.");
+    if (!email || !otpType) {
+      setError(
+        "Email or verification type not found. Please go back and try again."
+      );
       return;
     }
 
     try {
+      setError(""); // Clear any existing errors
+
       const result = await functions.createExecution(
         "68b7d2ca00049128cf12",
-        JSON.stringify({email, "otp-type": otpType || "reset"}),
+        JSON.stringify({
+          email: email.trim(),
+          "otp-type": otpType,
+        }),
         false,
         "/send-otp"
       );
@@ -54,41 +65,47 @@ const VerifyOtp = () => {
         responseData = JSON.parse(result.responseBody);
       } catch (parseError) {
         console.error("Error parsing response:", parseError);
-        setError("An error occurred while resending OTP.");
+        setError("An error occurred while resending verification code.");
         return;
       }
 
       if (responseData.success === false) {
-        setError(responseData.message || "Failed to resend OTP.");
+        setError(responseData.message || "Failed to resend verification code.");
       } else {
-        // Show success message or handle success
+        // Show success message
         console.log("OTP resent successfully");
         setError(""); // Clear any existing errors
-        // You could show a success toast here
+        // You could show a success toast here if available
       }
     } catch (error) {
       console.error("Error resending OTP:", error);
-      setError("An error occurred while resending OTP.");
+      setError("An error occurred while resending verification code.");
     }
   };
 
   const handleVerify = async () => {
     if (!otp || otp.length !== 5) {
-      setError("Please enter a valid 5-digit OTP");
+      setError("Please enter a valid 5-digit verification code");
+      return;
+    }
+
+    if (!email || !otpType) {
+      setError(
+        "Missing email or verification type. Please go back and try again."
+      );
       return;
     }
 
     setIsLoading(true);
-    // Only clear error when we're about to make a request
-    setError("");
+    setError(""); // Clear error when we're about to make a request
 
     try {
       const result = await functions.createExecution(
         "68b7d2ca00049128cf12",
         JSON.stringify({
-          email: email,
-          otp: otp,
-          "otp-type": otpType || "reset",
+          email: email.trim(),
+          otp: otp.trim(),
+          "otp-type": otpType,
         }),
         false,
         "/verify-otp"
@@ -101,8 +118,8 @@ const VerifyOtp = () => {
       try {
         responseData = JSON.parse(result.responseBody);
       } catch (parseError) {
-        console.error("Error parsing response:", parseError);
-        setError("An error occurred. Please try again.");
+        console.error("Error parsing verification response:", parseError);
+        setError("An error occurred during verification. Please try again.");
         setIsLoading(false);
         return;
       }
@@ -110,14 +127,18 @@ const VerifyOtp = () => {
       // Check if the verification was successful
       if (responseData.success === false) {
         // Show the actual error message from the response
-        setError(responseData.message || "Invalid OTP code. Please try again.");
+        setError(
+          responseData.message || "Invalid verification code. Please try again."
+        );
       } else {
-        // Route based on OTP type
+        // Verification successful - route based on OTP type
+        console.log("OTP verification successful for type:", otpType);
+
         if (otpType === "reset") {
           // Navigate to reset password screen with email parameter
           router.push({
             pathname: "/(auth)/resetPassword",
-            params: {email: email},
+            params: {email: email.trim()},
           });
         } else if (otpType === "signin") {
           // Set OTP verified status and navigate to home/main app
@@ -128,19 +149,24 @@ const VerifyOtp = () => {
           setOtpVerified(true);
           router.replace("/(auth)/firstOnboarding");
         } else {
-          // Default to reset password flow
+          // Default fallback to reset password flow
+          console.warn(
+            "Unknown OTP type:",
+            otpType,
+            "- defaulting to reset flow"
+          );
           router.push({
             pathname: "/(auth)/resetPassword",
-            params: {email: email},
+            params: {email: email.trim()},
           });
         }
       }
     } catch (error) {
       console.error("Error verifying OTP:", error);
-      setError("An error occurred. Please try again.");
+      setError("An error occurred during verification. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (

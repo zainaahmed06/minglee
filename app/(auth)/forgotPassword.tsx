@@ -60,7 +60,10 @@ const ForgotPassword = () => {
       try {
         const result = await functions.createExecution(
           "68b7d2ca00049128cf12",
-          JSON.stringify({email, "otp-type": "reset"}),
+          JSON.stringify({
+            email: email.trim(),
+            "otp-type": "reset",
+          }),
           false,
           "/send-otp"
         );
@@ -88,10 +91,13 @@ const ForgotPassword = () => {
             responseData.message || "No account found with this email address"
           );
         } else {
-          // Navigate to verify OTP screen with email as parameter
+          // Success - navigate to verify OTP screen with email as parameter
           router.push({
             pathname: "/(auth)/verifyOtp",
-            params: {email: email, type: "reset"},
+            params: {
+              email: email.trim(),
+              type: "reset",
+            },
           });
         }
       } catch (error) {

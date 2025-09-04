@@ -98,10 +98,13 @@ const SignIn = () => {
 
         await signIn(signInData);
 
-        // After successful authentication, send OTP
+        // After successful authentication, send OTP for additional verification
         const result = await functions.createExecution(
           "68b7d2ca00049128cf12",
-          JSON.stringify({email, "otp-type": "signin"}),
+          JSON.stringify({
+            email: email.trim(),
+            "otp-type": "signin",
+          }),
           false,
           "/send-otp"
         );
@@ -113,37 +116,65 @@ const SignIn = () => {
         try {
           responseData = JSON.parse(result.responseBody);
         } catch (parseError) {
-          console.error("Error parsing response:", parseError);
-          toast.show("An error occurred. Please try again.", {
-            type: "error",
-            placement: "top",
-            duration: 3000,
-          });
+          console.error("Error parsing OTP response:", parseError);
+          toast.show(
+            "An error occurred while sending verification code. Please try again.",
+            {
+              type: "error",
+              placement: "top",
+              duration: 3000,
+            }
+          );
           setIsLoading(false);
           return;
         }
 
         // Check if OTP was sent successfully
         if (responseData.success === false) {
-          toast.show(responseData.message || "Failed to send OTP", {
+          toast.show(
+            responseData.message || "Failed to send verification code",
+            {
+              type: "error",
+              placement: "top",
+              duration: 3000,
+            }
+          );
+        } else {
+          // Success - navigate to verify OTP screen
+          toast.show("Verification code sent to your email", {
+            type: "success",
+            placement: "top",
+            duration: 2000,
+          });
+
+          router.push({
+            pathname: "/(auth)/verifyOtp",
+            params: {
+              email: email.trim(),
+              type: "signin",
+            },
+          });
+        }
+      } catch (error: any) {
+        console.error("Error during signin process:", error);
+
+        // Handle specific auth errors vs OTP errors
+        if (
+          error.message?.includes("credentials") ||
+          error.message?.includes("password")
+        ) {
+          toast.show("Invalid email or password. Please try again.", {
             type: "error",
             placement: "top",
             duration: 3000,
           });
         } else {
-          // Navigate to verify OTP screen
-          router.push({
-            pathname: "/(auth)/verifyOtp",
-            params: {email: email, type: "signin"},
+          toast.show("An error occurred. Please try again.", {
+            type: "error",
+            placement: "top",
+            duration: 3000,
           });
         }
-      } catch (error) {
-        console.error("Error during signin process:", error);
-        toast.show("An error occurred. Please try again.", {
-          type: "error",
-          placement: "top",
-          duration: 3000,
-        });
       } finally {
         setIsLoading(false);
       }
