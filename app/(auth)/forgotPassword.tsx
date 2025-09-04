@@ -83,6 +83,7 @@ const ForgotPassword = () => {
 
         // Save the result to state
         setFunctionResult(responseData);
+        console.log(functionResult);
 
         // Check if the operation was successful
         if (responseData.success === false) {
