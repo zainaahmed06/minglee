@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import {Input} from "@/components/Input";
 import {BackIcon, LockIcon, MailIcon} from "@/constants/MingleeIcons";
+import {functions} from "@/services/appwrite";
 import {useAuth} from "@/store/useAuth";
 import {colors, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
@@ -86,17 +87,63 @@ const SignIn = () => {
     const isPasswordValid = validatePassword(password);
 
     if (isEmailValid && isPasswordValid) {
-      const data = {
-        email,
-        password,
-      };
       setIsLoading(true);
 
       try {
-        await signIn(data);
+        // First authenticate the user using signIn function from useAuth
+        const signInData = {
+          email,
+          password,
+        };
+
+        await signIn(signInData);
+
+        // After successful authentication, send OTP
+        const result = await functions.createExecution(
+          "68b7d2ca00049128cf12",
+          JSON.stringify({email, "otp-type": "signin"}),
+          false,
+          "/send-otp"
+        );
+
+        console.log("Send OTP result:", result);
+
+        // Parse the response body
+        let responseData;
+        try {
+          responseData = JSON.parse(result.responseBody);
+        } catch (parseError) {
+          console.error("Error parsing response:", parseError);
+          toast.show("An error occurred. Please try again.", {
+            type: "error",
+            placement: "top",
+            duration: 3000,
+          });
+          setIsLoading(false);
+          return;
+        }
+
+        // Check if OTP was sent successfully
+        if (responseData.success === false) {
+          toast.show(responseData.message || "Failed to send OTP", {
+            type: "error",
+            placement: "top",
+            duration: 3000,
+          });
+        } else {
+          // Navigate to verify OTP screen
+          router.push({
+            pathname: "/(auth)/verifyOtp",
+            params: {email: email, type: "signin"},
+          });
+        }
       } catch (error) {
-        // Error will be handled by the useEffect hook
-        console.log("Sign in error caught:", error);
+        console.error("Error during signin process:", error);
+        toast.show("An error occurred. Please try again.", {
+          type: "error",
+          placement: "top",
+          duration: 3000,
+        });
       } finally {
         setIsLoading(false);
       }

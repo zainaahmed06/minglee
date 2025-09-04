@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import OtpInput from "@/components/OtpInput";
 import {BackIcon} from "@/constants/MingleeIcons";
 import {functions} from "@/services/appwrite";
+import {useAuth} from "@/store/useAuth";
 import {colors, fontSizes, spacing} from "@/theme";
 import {router, useLocalSearchParams} from "expo-router";
 import React, {useEffect, useState} from "react";
@@ -14,6 +15,8 @@ const VerifyOtp = () => {
   const [error, setError] = useState("");
   const params = useLocalSearchParams();
   const email = params.email as string;
+  const otpType = params.type as string;
+  const {setOtpVerified} = useAuth();
 
   // Check if email parameter exists
   useEffect(() => {
@@ -31,7 +34,7 @@ const VerifyOtp = () => {
   };
 
   const handleResendOtp = async () => {
-    if (!email) {
+    if (!email && !otpType) {
       setError("Email not found. Please go back and try again.");
       return;
     }
@@ -39,7 +42,7 @@ const VerifyOtp = () => {
     try {
       const result = await functions.createExecution(
         "68b7d2ca00049128cf12",
-        JSON.stringify({email}),
+        JSON.stringify({email, "otp-type": otpType || "reset"}),
         false,
         "/send-otp"
       );
@@ -85,6 +88,7 @@ const VerifyOtp = () => {
         JSON.stringify({
           email: email,
           otp: otp,
+          "otp-type": otpType || "reset",
         }),
         false,
         "/verify-otp"
@@ -108,11 +112,28 @@ const VerifyOtp = () => {
         // Show the actual error message from the response
         setError(responseData.message || "Invalid OTP code. Please try again.");
       } else {
-        // Navigate to reset password screen with email parameter
-        router.push({
-          pathname: "/(auth)/resetPassword",
-          params: {email: email},
-        });
+        // Route based on OTP type
+        if (otpType === "reset") {
+          // Navigate to reset password screen with email parameter
+          router.push({
+            pathname: "/(auth)/resetPassword",
+            params: {email: email},
+          });
+        } else if (otpType === "signin") {
+          // Set OTP verified status and navigate to home/main app
+          setOtpVerified(true);
+          router.replace("/(tabs)/home");
+        } else if (otpType === "signup") {
+          // Set OTP verified status and navigate to onboarding for new users
+          setOtpVerified(true);
+          router.replace("/(auth)/firstOnboarding");
+        } else {
+          // Default to reset password flow
+          router.push({
+            pathname: "/(auth)/resetPassword",
+            params: {email: email},
+          });
+        }
       }
     } catch (error) {
       console.error("Error verifying OTP:", error);

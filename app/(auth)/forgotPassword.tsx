@@ -60,7 +60,7 @@ const ForgotPassword = () => {
       try {
         const result = await functions.createExecution(
           "68b7d2ca00049128cf12",
-          JSON.stringify({email}),
+          JSON.stringify({email, "otp-type": "reset"}),
           false,
           "/send-otp"
         );
@@ -91,7 +91,7 @@ const ForgotPassword = () => {
           // Navigate to verify OTP screen with email as parameter
           router.push({
             pathname: "/(auth)/verifyOtp",
-            params: {email: email},
+            params: {email: email, type: "reset"},
           });
         }
       } catch (error) {

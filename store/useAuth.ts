@@ -109,6 +109,7 @@ export interface AuthState {
   isInitialized: boolean;
   error: AuthError | null;
   otpEmailVerifications: boolean;
+  otpVerified: boolean;
   oauthRedirectUrl: string | null;
 
   // Actions
@@ -122,6 +123,7 @@ export interface AuthState {
   clearError: () => void;
   initialize: () => Promise<void>;
   setOtpEmailVerifications: (value: boolean) => void;
+  setOtpVerified: (value: boolean) => void;
   refreshUserData: () => Promise<User>;
   refreshProfile: () => Promise<User>;
 
@@ -170,6 +172,7 @@ export const useAuthStore = create<AuthState>()(
       isInitialized: false,
       error: null,
       otpEmailVerifications: false,
+      otpVerified: false,
       oauthRedirectUrl: null,
 
       // Initialize auth state on app load
@@ -269,7 +272,12 @@ export const useAuthStore = create<AuthState>()(
       // Sign out user
       signOut: async () => {
         try {
-          set({isLoading: true, error: null, otpEmailVerifications: false});
+          set({
+            isLoading: true,
+            error: null,
+            otpEmailVerifications: false,
+            otpVerified: false,
+          });
 
           // Delete current session
           await account.deleteSession("current");
@@ -279,6 +287,7 @@ export const useAuthStore = create<AuthState>()(
             isAuthenticated: false,
             isLoading: false,
             error: null,
+            otpVerified: false,
           });
         } catch (error: any) {
           // Even if logout fails, clear local state
@@ -287,6 +296,7 @@ export const useAuthStore = create<AuthState>()(
             isAuthenticated: false,
             isLoading: false,
             error: handleAppwriteError(error),
+            otpVerified: false,
           });
         }
       },
@@ -395,6 +405,11 @@ export const useAuthStore = create<AuthState>()(
       // Set OTP email verification state
       setOtpEmailVerifications: (value: boolean) => {
         set({otpEmailVerifications: value});
+      },
+
+      // Set OTP verified state
+      setOtpVerified: (value: boolean) => {
+        set({otpVerified: value});
       },
 
       // Send email verification
@@ -642,6 +657,7 @@ export const useAuthStore = create<AuthState>()(
         user: state.user,
         isAuthenticated: state.isAuthenticated,
         otpEmailVerifications: state.otpEmailVerifications,
+        otpVerified: state.otpVerified,
         oauthRedirectUrl: state.oauthRedirectUrl,
       }),
       version: 1,
@@ -653,6 +669,7 @@ export const useAuthStore = create<AuthState>()(
             ...persistedState,
             isInitialized: false,
             otpEmailVerifications: false,
+            otpVerified: false,
           };
         }
         return persistedState;
@@ -670,6 +687,7 @@ export const useAuth = () => {
     isInitialized,
     error,
     otpEmailVerifications,
+    otpVerified,
     oauthRedirectUrl,
     signUp,
     signIn,
@@ -681,6 +699,7 @@ export const useAuth = () => {
     clearError,
     initialize,
     setOtpEmailVerifications,
+    setOtpVerified,
     sendEmailVerification,
     confirmEmailVerification,
     resendEmailVerification,
@@ -699,6 +718,7 @@ export const useAuth = () => {
     isInitialized,
     error,
     otpEmailVerifications,
+    otpVerified,
     oauthRedirectUrl,
 
     // Actions
@@ -712,6 +732,7 @@ export const useAuth = () => {
     clearError,
     initialize,
     setOtpEmailVerifications,
+    setOtpVerified,
     sendEmailVerification,
     confirmEmailVerification,
     resendEmailVerification,

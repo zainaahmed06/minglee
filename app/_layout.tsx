@@ -47,7 +47,6 @@ export default function RootLayout() {
       warningColor={colors.warning}
       normalColor={colors.backgroundSecondary}>
       <Stack
-        initialRouteName='(auth)'
         screenOptions={{
           headerShown: false,
         }}

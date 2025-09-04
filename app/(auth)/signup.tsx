@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import {Input} from "@/components/Input";
 import {BackIcon, LockIcon, MailIcon} from "@/constants/MingleeIcons";
+import {functions} from "@/services/appwrite";
 import {useAuth} from "@/store/useAuth";
 import {colors, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
@@ -111,19 +112,63 @@ const SignUp = () => {
     }
 
     if (isEmailValid && isPasswordValid && agreeToPolicy) {
-      const data = {
-        email,
-        password,
-      };
       setIsLoading(true);
 
       try {
-        await signUp(data);
-        // Only navigate if signup is successful
-        router.push("/(auth)/verifyEmail");
+        // First create the user account using signUp function from useAuth
+        const signUpData = {
+          email,
+          password,
+        };
+
+        await signUp(signUpData);
+
+        // After successful account creation, send OTP
+        const result = await functions.createExecution(
+          "68b7d2ca00049128cf12",
+          JSON.stringify({email, "otp-type": "signup"}),
+          false,
+          "/send-otp"
+        );
+
+        console.log("Send OTP result:", result);
+
+        // Parse the response body
+        let responseData;
+        try {
+          responseData = JSON.parse(result.responseBody);
+        } catch (parseError) {
+          console.error("Error parsing response:", parseError);
+          toast.show("An error occurred. Please try again.", {
+            type: "error",
+            placement: "top",
+            duration: 3000,
+          });
+          setIsLoading(false);
+          return;
+        }
+
+        // Check if OTP was sent successfully
+        if (responseData.success === false) {
+          toast.show(responseData.message || "Failed to send OTP", {
+            type: "error",
+            placement: "top",
+            duration: 3000,
+          });
+        } else {
+          // Navigate to verify OTP screen
+          router.push({
+            pathname: "/(auth)/verifyOtp",
+            params: {email: email, type: "signup"},
+          });
+        }
       } catch (error) {
-        // Error will be handled by the useEffect hook
-        console.log("Sign up error caught:", error);
+        console.error("Error during signup process:", error);
+        toast.show("An error occurred. Please try again.", {
+          type: "error",
+          placement: "top",
+          duration: 3000,
+        });
       } finally {
         setIsLoading(false);
       }

@@ -3,7 +3,7 @@ import {Stack, useRouter, useSegments} from "expo-router";
 import React, {useEffect} from "react";
 
 const AuthLayout = () => {
-  const {user, isAuthenticated, isInitialized} = useAuth();
+  const {isAuthenticated, isInitialized, otpVerified} = useAuth();
   const router = useRouter();
   const segments = useSegments();
 
@@ -12,21 +12,21 @@ const AuthLayout = () => {
 
     const inAuthGroup = segments[0] === "(auth)";
 
-    if (isAuthenticated && user?.emailVerification) {
+    if (isAuthenticated && otpVerified) {
       // User is fully authenticated and verified - redirect to main app
       if (inAuthGroup) {
         router.replace("/(tabs)/home");
       }
-    } else if (isAuthenticated && user && !user.emailVerification) {
-      // User is authenticated but not verified - redirect to email verification
-      if (segments[1] !== "verifyEmail") {
-        router.replace("/(auth)/verifyEmail");
+    } else if (isAuthenticated && !otpVerified) {
+      // User is authenticated but OTP not verified - redirect to OTP verification
+      if (segments[1] !== "verifyOtp") {
+        router.replace("/(auth)/verifyOtp");
       }
     } else if (!isAuthenticated) {
       // User is not authenticated - stay in auth flow
       // No need to redirect as we're already in auth layout
     }
-  }, [isInitialized, isAuthenticated, user, segments, router]);
+  }, [isInitialized, isAuthenticated, otpVerified, segments, router]);
 
   // Show loading while initializing
   if (!isInitialized) {
