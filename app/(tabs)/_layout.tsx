@@ -1,9 +1,25 @@
 import {Chats, Explore, Home, Matches, Profile} from "@/constants/TabsIcons";
+import {useAuth} from "@/store/useAuth";
 import {colors} from "@/theme";
-import {Tabs} from "expo-router";
-import React from "react";
+import {Tabs, useRouter, useSegments} from "expo-router";
+import React, {useEffect} from "react";
 
 const TabsLayout = () => {
+  const {isAuthenticated, isInitialized, otpVerified} = useAuth();
+  const router = useRouter();
+  const segments = useSegments();
+
+  useEffect(() => {
+    if (!isInitialized) return;
+
+    const inTabsGroup = segments[0] === "(tabs)";
+
+    // If user is in tabs group but not fully authenticated and verified, redirect to auth
+    if (inTabsGroup && (!isAuthenticated || !otpVerified)) {
+      console.log("User not fully authenticated - redirecting to auth");
+      router.replace("/(auth)/signin");
+    }
+  }, [isInitialized, isAuthenticated, otpVerified, segments, router]);
   return (
     <Tabs
       screenOptions={{

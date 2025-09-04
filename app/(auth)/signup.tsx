@@ -24,6 +24,8 @@ const SignUp = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  console.log(email);
+
   // Handle error display with toast
   useEffect(() => {
     if (error) {
@@ -128,7 +130,7 @@ const SignUp = () => {
           "68b7d2ca00049128cf12",
           JSON.stringify({
             email: email.trim(),
-            "otp-type": "signup",
+            otp_type: "signup",
           }),
           false,
           "/send-otp"

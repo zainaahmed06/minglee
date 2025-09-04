@@ -52,7 +52,7 @@ const VerifyOtp = () => {
         "68b7d2ca00049128cf12",
         JSON.stringify({
           email: email.trim(),
-          "otp-type": otpType,
+          otp_type: otpType,
         }),
         false,
         "/send-otp"
@@ -105,7 +105,7 @@ const VerifyOtp = () => {
         JSON.stringify({
           email: email.trim(),
           otp: otp.trim(),
-          "otp-type": otpType,
+          otp_type: otpType,
         }),
         false,
         "/verify-otp"
@@ -147,7 +147,6 @@ const VerifyOtp = () => {
         } else if (otpType === "signup") {
           // Set OTP verified status and navigate to onboarding for new users
           setOtpVerified(true);
-          router.replace("/(auth)/firstOnboarding");
         } else {
           // Default fallback to reset password flow
           console.warn(

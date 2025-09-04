@@ -194,6 +194,7 @@ export const useAuthStore = create<AuthState>()(
           } else {
             set({
               user: null,
+              otpVerified: false,
               isAuthenticated: false,
               isInitialized: true,
               isLoading: false,
@@ -203,6 +204,7 @@ export const useAuthStore = create<AuthState>()(
           // Session might be invalid or expired
           set({
             user: null,
+            otpVerified: false,
             isAuthenticated: false,
             isInitialized: true,
             isLoading: false,
@@ -224,7 +226,6 @@ export const useAuthStore = create<AuthState>()(
 
           // Get user data
           const userData = await account.get();
-          await account.createVerification("https://minglee.com/verify");
 
           set({
             user: userData as User,

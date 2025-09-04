@@ -22,6 +22,7 @@ const SignIn = () => {
   // Validation states
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  console.log("First Email Login", email);
 
   // Handle error display with toast
   useEffect(() => {
@@ -98,12 +99,14 @@ const SignIn = () => {
 
         await signIn(signInData);
 
+        console.log("Second Email Login", email);
+
         // After successful authentication, send OTP for additional verification
         const result = await functions.createExecution(
           "68b7d2ca00049128cf12",
           JSON.stringify({
             email: email.trim(),
-            "otp-type": "signin",
+            otp_type: "signin",
           }),
           false,
           "/send-otp"

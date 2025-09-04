@@ -62,7 +62,7 @@ const ForgotPassword = () => {
           "68b7d2ca00049128cf12",
           JSON.stringify({
             email: email.trim(),
-            "otp-type": "reset",
+            otp_type: "reset",
           }),
           false,
           "/send-otp"

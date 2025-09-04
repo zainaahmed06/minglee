@@ -1,8 +1,11 @@
+import Button from "@/components/Button";
 import SwitchButton from "@/components/SwitchButton";
+import {useAuth} from "@/store/useAuth";
 import React from "react";
 import {StyleSheet, View} from "react-native";
 
 const Profile = () => {
+  const {signOut} = useAuth();
   const tabs = [
     {
       key: "likes",
@@ -30,6 +33,9 @@ const Profile = () => {
         onTabPress={handleTabPress}
         initialTabIndex={0}
       />
+      <Button variant='flat' color='primary' onPress={signOut}>
+        Sign Out
+      </Button>
     </View>
   );
 };
