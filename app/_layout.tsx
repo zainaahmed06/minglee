@@ -1,7 +1,7 @@
 import {LogoIcon} from "@/constants/OtherIcons";
 import {useAuth} from "@/store/useAuth";
 import {colors, spacing} from "@/theme";
-import {Stack} from "expo-router";
+import {Slot} from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import {useEffect} from "react";
 import {ActivityIndicator, View} from "react-native";
@@ -46,7 +46,7 @@ export default function RootLayout() {
       dangerColor={colors.danger}
       warningColor={colors.warning}
       normalColor={colors.backgroundSecondary}>
-      <Stack
+      <Slot
         screenOptions={{
           headerShown: false,
         }}

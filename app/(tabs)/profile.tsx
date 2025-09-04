@@ -9,13 +9,13 @@ const Profile = () => {
   const {signOut} = useAuth();
   const tabs = [
     {
-      key: "likes",
-      title: "Likes",
+      key: "pushNotifications",
+      title: "Push Notifications",
       count: 85,
     },
     {
-      key: "superlikes",
-      title: "Super Likes",
+      key: "emailNotifications",
+      title: "Email Notifications",
       count: 24,
     },
   ];
@@ -37,7 +37,7 @@ const Profile = () => {
       <Button
         variant='flat'
         color='primary'
-        onPress={() => router.push("/(single)/subscriptions")}>
+        onPress={() => router.push("/(single)/notificationsSetting")}>
         Sign Out
       </Button>
     </View>
