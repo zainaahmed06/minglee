@@ -4,13 +4,13 @@ import {Profiles} from "@/types/appwrite";
 import {useCallback, useEffect, useState} from "react";
 import {Query} from "react-native-appwrite";
 
-export const useMatchedProfiles = () => {
+export const useBlockedProfiles = () => {
   const {user} = useAuth();
-  const [matchedProfiles, setMatchedProfiles] = useState<Profiles[]>([]);
+  const [blockedProfiles, setBlockedProfiles] = useState<Profiles[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchMatchedProfiles = useCallback(async () => {
+  const fetchBlockedProfiles = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -29,7 +29,7 @@ export const useMatchedProfiles = () => {
       );
 
       if (userProfileResponse.documents.length === 0) {
-        setMatchedProfiles([]);
+        setBlockedProfiles([]);
         return;
       }
 
@@ -38,7 +38,7 @@ export const useMatchedProfiles = () => {
       const matchedUserIds = userProfile.matched_profiles || [];
 
       if (matchedUserIds.length === 0) {
-        setMatchedProfiles([]);
+        setBlockedProfiles([]);
         return;
       }
 
@@ -55,7 +55,7 @@ export const useMatchedProfiles = () => {
       const profiles = matchedProfilesResponse.documents.map(
         (doc) => doc as unknown as Profiles
       );
-      setMatchedProfiles(profiles);
+      setBlockedProfiles(profiles);
     } catch (err: any) {
       console.error("Error fetching matched profiles:", err);
       setError(err.message || "Failed to fetch matched profiles");
@@ -64,21 +64,21 @@ export const useMatchedProfiles = () => {
     }
   }, [user]);
 
-  const refreshMatchedProfiles = () => {
-    fetchMatchedProfiles();
+  const refreshBlockedProfiles = () => {
+    fetchBlockedProfiles();
   };
 
   useEffect(() => {
     if (user) {
-      fetchMatchedProfiles();
+      fetchBlockedProfiles();
     }
-  }, [user, fetchMatchedProfiles]);
+  }, [user, fetchBlockedProfiles]);
 
   return {
-    matchedProfiles,
+    blockedProfiles,
     isLoading,
     error,
-    refreshMatchedProfiles,
-    refetch: fetchMatchedProfiles,
+    refreshBlockedProfiles,
+    refetch: fetchBlockedProfiles,
   };
 };

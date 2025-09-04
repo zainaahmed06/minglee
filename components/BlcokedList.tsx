@@ -1,4 +1,4 @@
-import {useMatchedProfiles} from "@/store/useMatchedProfiles";
+import {useBlockedProfiles} from "@/store/useBlockedProfiles";
 import {colors, radius, spacing} from "@/theme";
 import {Profiles} from "@/types/appwrite";
 import {
@@ -66,8 +66,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({profile, onPress}) => {
 };
 
 const MatchesList = () => {
-  const {matchedProfiles, isLoading, error, refreshMatchedProfiles} =
-    useMatchedProfiles();
+  const {blockedProfiles, isLoading, error, refreshBlockedProfiles} =
+    useBlockedProfiles();
 
   const handleProfilePress = (profile: Profiles) => {
     console.log(`Profile ${profile.user_id} pressed`);
@@ -85,14 +85,14 @@ const MatchesList = () => {
         <Ionicons name='heart-dislike-outline' size={60} color='#EF4444' />
         <Text style={styles.errorText}>Failed to load liked profiles</Text>
         <Text style={styles.errorSubtext}>{error}</Text>
-        <Pressable style={styles.retryButton} onPress={refreshMatchedProfiles}>
+        <Pressable style={styles.retryButton} onPress={refreshBlockedProfiles}>
           <Text style={styles.retryText}>Retry</Text>
         </Pressable>
       </View>
     );
   }
 
-  if (isLoading && matchedProfiles.length === 0) {
+  if (isLoading && blockedProfiles.length === 0) {
     return (
       <View style={styles.centerContainer}>
         <ActivityIndicator size='large' color={colors.primary} />
@@ -101,7 +101,7 @@ const MatchesList = () => {
     );
   }
 
-  if (matchedProfiles.length === 0) {
+  if (blockedProfiles.length === 0) {
     return (
       <View style={styles.centerContainer}>
         <LottieView
@@ -120,7 +120,7 @@ const MatchesList = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={matchedProfiles}
+        data={blockedProfiles}
         renderItem={renderProfileCard}
         keyExtractor={(item) => item.user_id}
         numColumns={2}
@@ -130,7 +130,7 @@ const MatchesList = () => {
         refreshControl={
           <RefreshControl
             refreshing={isLoading}
-            onRefresh={refreshMatchedProfiles}
+            onRefresh={refreshBlockedProfiles}
             colors={[colors.primary]}
             tintColor={colors.primary}
           />

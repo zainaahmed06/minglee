@@ -111,8 +111,7 @@ const ProfilePrivacy: React.FC = () => {
       title: "Username",
       rightText: "andrew49",
       onPress: () => {
-        console.log("Navigate to Username settings");
-        // router.push('/profile/username');
+        router.push("/(single)/changeUsername");
       },
     },
     {
@@ -157,8 +156,7 @@ const ProfilePrivacy: React.FC = () => {
       title: "Blocked Users (24)",
       subtitle: "The people you blocked are displayed here.",
       onPress: () => {
-        console.log("Navigate to Blocked Users");
-        // router.push('/privacy/blocked-users');
+        router.push("/(single)/blockedUsers");
       },
     },
   ];
