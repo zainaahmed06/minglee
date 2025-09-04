@@ -147,8 +147,7 @@ const Settings: React.FC = () => {
       title: "Account & Security",
       icon: "shield-checkmark-outline",
       onPress: () => {
-        console.log("Navigate to Account & Security");
-        // router.push('/settings/security');
+        console.log("Account Security");
       },
     },
     {
