@@ -1,10 +1,13 @@
+import LikedList from "@/components/LikedList";
 import MainHeader from "@/components/MainHeader";
+import MatchesList from "@/components/MatchesList";
 import SwitchButton from "@/components/SwitchButton";
 import {colors} from "@/theme";
-import React from "react";
+import React, {useState} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 const Matches = () => {
+  const [isMatchActive, setIsMatchActive] = useState(true);
   const tabs = [
     {
       key: "matches",
@@ -19,19 +22,23 @@ const Matches = () => {
   ];
 
   const handleTabPress = (index: number) => {
-    console.log(`Tab ${index} pressed`);
-    // You can add your logic here to change content based on selected tab
+    if (index === 0) {
+      setIsMatchActive(true);
+    } else {
+      setIsMatchActive(false);
+    }
   };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.background}}>
       <MainHeader />
       <SwitchButton
         tabs={tabs}
-        activeColor='#8A4FFF'
-        inactiveColor='#F5F5F5'
+        activeColor={colors.primary}
+        inactiveColor={colors.surfaceSecondary}
         onTabPress={handleTabPress}
         initialTabIndex={0}
       />
+      {isMatchActive ? <MatchesList /> : <LikedList />}
     </SafeAreaView>
   );
 };

@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import SwitchButton from "@/components/SwitchButton";
 import {useAuth} from "@/store/useAuth";
+import {router} from "expo-router";
 import React from "react";
 import {StyleSheet, View} from "react-native";
 
@@ -33,7 +34,10 @@ const Profile = () => {
         onTabPress={handleTabPress}
         initialTabIndex={0}
       />
-      <Button variant='flat' color='primary' onPress={signOut}>
+      <Button
+        variant='flat'
+        color='primary'
+        onPress={() => router.push("/(single)/subscriptions")}>
         Sign Out
       </Button>
     </View>

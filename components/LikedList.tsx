@@ -1,4 +1,4 @@
-import {useMatchedProfiles} from "@/store/useMatchedProfiles";
+import {useLikedProfiles} from "@/store/useLikedProfiles";
 import {colors, radius, spacing} from "@/theme";
 import {Profiles} from "@/types/appwrite";
 import {
@@ -67,7 +67,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({profile, onPress}) => {
 
 const LikedList = () => {
   const {likedProfiles, isLoading, error, refreshLikedProfiles} =
-    useMatchedProfiles();
+    useLikedProfiles();
 
   const handleProfilePress = (profile: Profiles) => {
     console.log(`Profile ${profile.user_id} pressed`);
@@ -107,11 +107,11 @@ const LikedList = () => {
         <LottieView
           autoPlay
           style={{height: 120, width: 120}}
-          source={require("@/lotties/Match.json")}
+          source={require("@/lotties/Heart.json")}
         />
-        <Text style={styles.emptyText}>No matched profiles yet</Text>
+        <Text style={styles.emptyText}>No liked profiles yet</Text>
         <Text style={styles.emptySubtext}>
-          Profiles that Matched with you will appear here
+          Profiles you like will appear here
         </Text>
       </View>
     );

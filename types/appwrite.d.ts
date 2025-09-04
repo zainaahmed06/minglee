@@ -61,6 +61,9 @@ export type Profiles = Models.Document & {
   company: string | null;
   school: string | null;
   is_verified: boolean | null;
+  profile_image_url: string;
+  liked_profiles: string[] | null;
+  matched_profiles: string[] | null;
 };
 
 export type Messages = Models.Document & {
@@ -69,6 +72,7 @@ export type Messages = Models.Document & {
   type: Type;
   content: string | null;
   imageUrl: string | null;
+  chats: Chats;
 };
 
 export type Subscriptions = Models.Document & {};
@@ -123,7 +127,7 @@ export type Reports = Models.Document & {
 
 export type Notifications = Models.Document & {
   user_id: string;
-  type: NotificationType;
+  NotificationType: NotificationType;
   title: string;
   body: string;
   is_read: boolean;
@@ -135,4 +139,10 @@ export type UserSettings = Models.Document & {
   push_notifications_enabled: boolean;
   email_notifications_enabled: boolean;
   discoverable: boolean;
+};
+
+export type Chats = Models.Document & {
+  firstUser: Profiles;
+  secondUser: Profiles;
+  muted_by: string[] | null;
 };

@@ -1,5 +1,5 @@
 import {BellIcon, LogoIcon, MenuIcon} from "@/constants/OtherIcons";
-import {colors} from "@/theme";
+import {colors, spacing} from "@/theme";
 import {router} from "expo-router";
 import React from "react";
 import {Pressable, StyleSheet, View} from "react-native";
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 16,
+    paddingHorizontal: spacing.md,
     paddingVertical: 8,
     backgroundColor: colors.background,
   },
