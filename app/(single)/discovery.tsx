@@ -245,7 +245,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 const Discovery: React.FC = () => {
   // State for preferences
   const [goGlobal, setGoGlobal] = useState(false);
-  const [showMe, setShowMe] = useState("Women");
+  const [showMe] = useState("Women");
   const [distanceUnit, setDistanceUnit] = useState<"km" | "mi">("km");
   const [distanceRange, setDistanceRange] = useState(200);
   const [ageMin, setAgeMin] = useState(20);

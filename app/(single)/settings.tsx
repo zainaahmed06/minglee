@@ -92,7 +92,7 @@ const SettingsItemComponent: React.FC<{item: SettingsItem}> = ({item}) => (
 );
 
 const Settings: React.FC = () => {
-  const {signOut, user} = useAuth();
+  const {signOut} = useAuth();
 
   const handleLogout = () => {
     Alert.alert("Logout", "Are you sure you want to logout?", [
@@ -129,8 +129,7 @@ const Settings: React.FC = () => {
       title: "Profile & Privacy",
       icon: "person-outline",
       onPress: () => {
-        console.log("Navigate to Profile & Privacy");
-        // router.push('/settings/profile');
+        router.push("/profilePrivacy");
       },
     },
     {
@@ -155,7 +154,7 @@ const Settings: React.FC = () => {
       title: "Subscription",
       icon: "star-outline",
       onPress: () => {
-        router.push("/(single)/subscriptions");
+        router.push("/mySubscription");
       },
     },
     {
@@ -181,8 +180,7 @@ const Settings: React.FC = () => {
       title: "Data & Analytics",
       icon: "analytics-outline",
       onPress: () => {
-        console.log("Navigate to Data & Analytics");
-        // router.push('/settings/analytics');
+        router.push("/dataAnalytics");
       },
     },
     {
