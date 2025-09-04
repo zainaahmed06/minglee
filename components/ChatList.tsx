@@ -16,6 +16,7 @@ interface Chat {
   status: ChatStatus;
 }
 
+// Learning The System Of Chatting
 const chats = [
   {
     id: 1,
