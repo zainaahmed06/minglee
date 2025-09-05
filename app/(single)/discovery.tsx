@@ -3,14 +3,8 @@ import {Ionicons} from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
 import {router} from "expo-router";
 import React, {useState} from "react";
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Switch,
-  Text,
-  View,
-} from "react-native";
+import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
+import Toggle from "react-native-reanimated-toggle";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 // Types for preferences
@@ -102,11 +96,15 @@ const TogglePreference: React.FC<TogglePreferenceProps> = ({
       <Text style={styles.preferenceTitle}>{title}</Text>
       <Text style={styles.preferenceSubtitle}>{subtitle}</Text>
     </View>
-    <Switch
-      value={value}
-      onValueChange={onValueChange}
-      trackColor={{false: colors.border, true: colors.primary}}
-      thumbColor={value ? colors.background : colors.textTertiary}
+
+    <Toggle
+      toggled={value}
+      onChange={onValueChange}
+      thumbOffset={4}
+      activeTrackColor={colors.primary}
+      inActiveTrackColor={colors.border}
+      trackStyle={{height: 30, width: 48}}
+      thumbSize={20}
     />
   </View>
 );

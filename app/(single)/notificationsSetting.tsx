@@ -54,6 +54,7 @@ const Matches = () => {
           onTabPress={handleTabPress}
           initialTabIndex={0}
         />
+
         <View style={{height: spacing.lg}} />
         {isPushActive ? <NotificationsList /> : <EmailNotifications />}
         <View style={{height: spacing.lg}} />

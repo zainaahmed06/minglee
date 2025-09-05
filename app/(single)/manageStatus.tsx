@@ -2,7 +2,8 @@ import {colors, fontSizes, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
 import React, {useState} from "react";
-import {StyleSheet, Switch, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import Toggle from "react-native-reanimated-toggle";
 
 const ManageStatus = () => {
   const [showActiveStatus, setShowActiveStatus] = useState<boolean>(true);
@@ -29,12 +30,14 @@ const ManageStatus = () => {
             people.
           </Text>
         </View>
-        <Switch
-          value={showActiveStatus}
-          onValueChange={() => setShowActiveStatus(!showActiveStatus)}
-          trackColor={{false: colors.border, true: colors.primary}}
-          thumbColor={showActiveStatus ? "white" : colors.textTertiary}
-          style={styles.switch}
+        <Toggle
+          toggled={showActiveStatus}
+          onChange={() => setShowActiveStatus(!showActiveStatus)}
+          thumbOffset={4}
+          activeTrackColor={colors.primary}
+          inActiveTrackColor={colors.border}
+          trackStyle={{height: 30, width: 48}}
+          thumbSize={20}
         />
       </View>
 
@@ -47,12 +50,13 @@ const ManageStatus = () => {
             Datify in the last 24 hours.
           </Text>
         </View>
-        <Switch
-          value={showRecentlyActive}
-          onValueChange={() => setShowRecentlyActive(!showRecentlyActive)}
-          trackColor={{false: colors.border, true: colors.primary}}
-          thumbColor={showRecentlyActive ? "white" : colors.textTertiary}
-          style={styles.switch}
+        <Toggle
+          toggled={showRecentlyActive}
+          onChange={() => setShowRecentlyActive(!showRecentlyActive)}
+          thumbOffset={4}
+          activeTrackColor='orange'
+          trackStyle={{height: 30, width: 48}}
+          thumbSize={20}
         />
       </View>
     </View>

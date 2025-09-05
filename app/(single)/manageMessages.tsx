@@ -2,7 +2,8 @@ import {colors, fontSizes, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
 import React, {useState} from "react";
-import {StyleSheet, Switch, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import Toggle from "react-native-reanimated-toggle";
 
 const ManageMessages = () => {
   const [receiveDirectMessages, setReceiveDirectMessages] =
@@ -30,12 +31,15 @@ const ManageMessages = () => {
             request to you in order to connect in the message.
           </Text>
         </View>
-        <Switch
-          value={receiveDirectMessages}
-          onValueChange={() => setReceiveDirectMessages(!receiveDirectMessages)}
-          trackColor={{false: colors.border, true: colors.primary}}
-          thumbColor={receiveDirectMessages ? "white" : colors.textTertiary}
-          style={styles.switch}
+
+        <Toggle
+          toggled={receiveDirectMessages}
+          onChange={() => setReceiveDirectMessages(!receiveDirectMessages)}
+          thumbOffset={4}
+          activeTrackColor={colors.primary}
+          inActiveTrackColor={colors.border}
+          trackStyle={{height: 30, width: 48}}
+          thumbSize={20}
         />
       </View>
 
@@ -47,12 +51,14 @@ const ManageMessages = () => {
             If turned off, you won&apos;t send or receive read receipts.
           </Text>
         </View>
-        <Switch
-          value={readReceipts}
-          onValueChange={() => setReadReceipts(!readReceipts)}
-          trackColor={{false: colors.border, true: colors.primary}}
-          thumbColor={readReceipts ? "white" : colors.textTertiary}
-          style={styles.switch}
+        <Toggle
+          toggled={readReceipts}
+          onChange={() => setReadReceipts(!readReceipts)}
+          thumbOffset={4}
+          activeTrackColor={colors.primary}
+          inActiveTrackColor={colors.border}
+          trackStyle={{height: 30, width: 48}}
+          thumbSize={20}
         />
       </View>
     </View>

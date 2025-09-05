@@ -2,14 +2,8 @@ import {colors, fontSizes, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
 import React, {useState} from "react";
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Switch,
-  Text,
-  View,
-} from "react-native";
+import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
+import Toggle from "react-native-reanimated-toggle";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 // Types for privacy items
@@ -75,11 +69,14 @@ const PrivacyToggleComponent: React.FC<{
       <Text style={styles.privacyTitle}>{item.title}</Text>
       <Text style={styles.privacySubtitle}>{item.subtitle}</Text>
     </View>
-    <Switch
-      value={item.enabled}
-      onValueChange={() => onToggle(item.id)}
-      trackColor={{false: colors.border, true: colors.primary}}
-      thumbColor={item.enabled ? colors.background : colors.textTertiary}
+    <Toggle
+      toggled={item.enabled}
+      onChange={() => onToggle(item.id)}
+      thumbOffset={4}
+      activeTrackColor={colors.primary}
+      inActiveTrackColor={colors.border}
+      trackStyle={{height: 30, width: 48}}
+      thumbSize={20}
     />
   </View>
 );

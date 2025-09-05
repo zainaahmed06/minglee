@@ -7,10 +7,10 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  Switch,
   Text,
   View,
 } from "react-native";
+import Toggle from "react-native-reanimated-toggle";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 // Types for security items
@@ -49,11 +49,14 @@ const SecurityToggleComponent: React.FC<{
 }> = ({item, onToggle}) => (
   <View style={styles.securityItem}>
     <Text style={styles.securityTitle}>{item.title}</Text>
-    <Switch
-      value={item.enabled}
-      onValueChange={() => onToggle(item.id)}
-      trackColor={{false: colors.border, true: colors.primary}}
-      thumbColor={item.enabled ? colors.background : colors.textTertiary}
+    <Toggle
+      toggled={item.enabled}
+      onChange={() => onToggle(item.id)}
+      thumbOffset={4}
+      activeTrackColor={colors.primary}
+      inActiveTrackColor={colors.border}
+      trackStyle={{height: 30, width: 48}}
+      thumbSize={20}
     />
   </View>
 );

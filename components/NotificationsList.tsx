@@ -1,6 +1,7 @@
 import {colors, fontSizes, spacing} from "@/theme";
 import React, {useState} from "react";
-import {StyleSheet, Switch, Text, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
+import Toggle from "react-native-reanimated-toggle";
 
 interface NotificationItem {
   id: string;
@@ -54,11 +55,14 @@ const NotificationsList: React.FC = () => {
       {notifications.map((item) => (
         <View key={item.id} style={styles.notificationItem}>
           <Text style={styles.notificationTitle}>{item.title}</Text>
-          <Switch
-            value={item.enabled}
-            onValueChange={() => handleToggle(item.id)}
-            trackColor={{false: colors.border, true: colors.primary}}
-            thumbColor={item.enabled ? colors.background : colors.textTertiary}
+          <Toggle
+            toggled={item.enabled}
+            onChange={() => handleToggle(item.id)}
+            thumbOffset={4}
+            activeTrackColor={colors.primary}
+            inActiveTrackColor={colors.border}
+            trackStyle={{height: 30, width: 48}}
+            thumbSize={20}
           />
         </View>
       ))}
@@ -74,7 +78,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: spacing.xs,
+    paddingVertical: spacing.md,
     paddingHorizontal: spacing.md,
   },
   notificationTitle: {
