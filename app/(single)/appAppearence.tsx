@@ -70,7 +70,9 @@ const AppAppearence = () => {
         onPress={handleLanguagePress}
         activeOpacity={0.7}>
         <Text style={styles.settingTitle}>App Language</Text>
-        <View style={styles.valueContainer}>
+        <Pressable
+          onPress={() => router.push("/(single)/appLanguage")}
+          style={styles.valueContainer}>
           <Text style={styles.settingValue}>{selectedLanguage}</Text>
           <Ionicons
             name='chevron-forward'
@@ -78,7 +80,7 @@ const AppAppearence = () => {
             color={colors.textTertiary}
             style={styles.chevron}
           />
-        </View>
+        </Pressable>
       </TouchableOpacity>
     </SafeAreaView>
   );

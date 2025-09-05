@@ -3,6 +3,7 @@ import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
 import React, {useState} from "react";
 import {
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -37,18 +38,22 @@ const AppLanguage = () => {
     // In a real app, you would also update the app's language setting
   };
 
+  const SettingsHeader: React.FC = () => (
+    <View style={styles.header}>
+      <Pressable
+        style={styles.backButton}
+        onPress={() => router.back()}
+        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+        <Ionicons name='arrow-back' size={24} color={colors.text} />
+      </Pressable>
+      <Text style={styles.headerTitle}>Settings</Text>
+      <View style={styles.placeholder} />
+    </View>
+  );
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => router.back()}
-          style={styles.backButton}>
-          <Ionicons name='arrow-back' size={24} color={colors.text} />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>App Language</Text>
-      </View>
-
+      <SettingsHeader />
       <ScrollView style={styles.scrollView}>
         {languages.map((language) => (
           <TouchableOpacity
@@ -85,18 +90,22 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: spacing.md,
-    paddingVertical: spacing.xl,
+    paddingVertical: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
   backButton: {
-    paddingRight: spacing.md,
+    padding: spacing.xs,
   },
   headerTitle: {
-    fontSize: fontSizes.xl,
+    fontSize: fontSizes.lg,
     fontWeight: "600",
     color: colors.text,
+  },
+  placeholder: {
+    width: 32,
   },
   scrollView: {
     flex: 1,
@@ -106,8 +115,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: spacing.lg,
     paddingHorizontal: spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
     borderRadius: 8,
     margin: spacing.md,
   },

@@ -114,16 +114,14 @@ const ProfilePrivacy: React.FC = () => {
       id: "view-web-profile",
       title: "View Web Profile",
       onPress: () => {
-        console.log("Navigate to Web Profile");
-        // router.push('/profile/web-profile');
+        router.push("/(single)/userProfile");
       },
     },
     {
       id: "share-profile",
       title: "Share My Profile",
       onPress: () => {
-        console.log("Navigate to Share Profile");
-        // router.push('/profile/share');
+        router.push("/(single)/userProfile");
       },
     },
   ];
@@ -135,7 +133,7 @@ const ProfilePrivacy: React.FC = () => {
       title: "Visibility",
       subtitle: "Choose who can see your profile.",
       onPress: () => {
-        router.push("/visibility");
+        router.push("/(single)/visibility");
       },
     },
     {
@@ -143,13 +141,12 @@ const ProfilePrivacy: React.FC = () => {
       title: "Profile Verification",
       subtitle: "Verify your profile to gain more trust.",
       onPress: () => {
-        console.log("Navigate to Profile Verification");
-        // router.push('/privacy/verification');
+        router.push("/(single)/userProfile");
       },
     },
     {
       id: "blocked-users",
-      title: "Blocked Users (24)",
+      title: "Blocked Users ",
       subtitle: "The people you blocked are displayed here.",
       onPress: () => {
         router.push("/(single)/blockedUsers");
@@ -163,16 +160,14 @@ const ProfilePrivacy: React.FC = () => {
       id: "active-status",
       title: "Manage Active Status",
       onPress: () => {
-        console.log("Navigate to Active Status settings");
-        // router.push('/messages/active-status');
+        router.push("/(single)/manageStatus");
       },
     },
     {
       id: "manage-messages",
       title: "Manage Messages",
       onPress: () => {
-        console.log("Navigate to Message settings");
-        // router.push('/messages/manage');
+        router.push("/(single)/manageMessages");
       },
     },
   ];
