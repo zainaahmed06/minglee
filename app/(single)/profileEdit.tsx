@@ -238,7 +238,7 @@ const ProfileEdit = () => {
         {/* Section Links */}
         <SectionLink
           title='Languages I Know'
-          onPress={() => router.push("/(single)/languages")}
+          onPress={() => router.push("/(single)/languagesSelection")}
         />
         <SectionLink
           title='Relationship Goals'
@@ -298,7 +298,7 @@ const ProfileEdit = () => {
         {/* Section Links */}
         <SectionLink
           title='Lifestyle'
-          onPress={() => router.push("/(single)/lifestyle")}
+          onPress={() => router.push("/(single)/lifestyleSelection")}
         />
         <SectionLink
           title='Music Preferences'
