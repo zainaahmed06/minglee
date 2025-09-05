@@ -8,7 +8,6 @@ import {
   Alert,
   Pressable,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -180,8 +179,6 @@ const Settings: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle='dark-content' backgroundColor={colors.background} />
-
       <SettingsHeader />
 
       <ScrollView

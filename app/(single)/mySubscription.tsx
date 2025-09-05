@@ -3,14 +3,7 @@ import {colors, fontSizes, radius, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
 import React from "react";
-import {
-  Pressable,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 // Types for subscription features
@@ -95,8 +88,6 @@ const MySubscription: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle='dark-content' backgroundColor={colors.background} />
-
       <SubscriptionHeader />
 
       <ScrollView

@@ -2,14 +2,7 @@ import {colors, fontSizes, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
 import React, {useState} from "react";
-import {
-  Pressable,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 // Types for visibility options
@@ -86,8 +79,6 @@ const Visibility: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle='dark-content' backgroundColor={colors.background} />
-
       <VisibilityHeader />
 
       <ScrollView

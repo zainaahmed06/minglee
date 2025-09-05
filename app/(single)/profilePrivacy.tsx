@@ -5,7 +5,6 @@ import React, {useState} from "react";
 import {
   Pressable,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Switch,
   Text,
@@ -183,8 +182,6 @@ const ProfilePrivacy: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle='dark-content' backgroundColor={colors.background} />
-
       <PrivacyHeader />
 
       <ScrollView

@@ -64,6 +64,7 @@ export type Profiles = Models.Document & {
   profile_image_url: string;
   liked_profiles: string[] | null;
   matched_profiles: string[] | null;
+  blocked_profiles: string[] | null;
 };
 
 export type Messages = Models.Document & {

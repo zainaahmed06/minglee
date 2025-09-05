@@ -6,7 +6,6 @@ import React, {useState} from "react";
 import {
   Pressable,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Switch,
   Text,
@@ -280,8 +279,6 @@ const Discovery: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle='dark-content' backgroundColor={colors.background} />
-
       <DiscoveryHeader />
 
       <ScrollView

@@ -25,7 +25,7 @@ export const useBlockedProfiles = () => {
       );
 
       console.log(
-        JSON.stringify(userProfileResponse.documents[0].matched_profiles)
+        JSON.stringify(userProfileResponse.documents[0].blocked_profiles)
       );
 
       if (userProfileResponse.documents.length === 0) {
@@ -35,24 +35,24 @@ export const useBlockedProfiles = () => {
 
       const userProfile = userProfileResponse
         .documents[0] as unknown as Profiles;
-      const matchedUserIds = userProfile.matched_profiles || [];
+      const blockedUserIds = userProfile.blocked_profiles || [];
 
-      if (matchedUserIds.length === 0) {
+      if (blockedUserIds.length === 0) {
         setBlockedProfiles([]);
         return;
       }
 
       // Fetch profiles of liked users
-      const matchedProfilesResponse = await databases.listDocuments(
+      const blockedProfilesResponse = await databases.listDocuments(
         "main",
         "profiles",
         [
-          Query.equal("user_id", matchedUserIds),
+          Query.equal("user_id", blockedUserIds),
           Query.limit(100), // Reasonable limit
         ]
       );
 
-      const profiles = matchedProfilesResponse.documents.map(
+      const profiles = blockedProfilesResponse.documents.map(
         (doc) => doc as unknown as Profiles
       );
       setBlockedProfiles(profiles);

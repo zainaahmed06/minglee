@@ -6,7 +6,6 @@ import {
   Alert,
   Pressable,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Switch,
   Text,
@@ -179,8 +178,6 @@ const AccountSecurity: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle='dark-content' backgroundColor={colors.background} />
-
       <SecurityHeader />
 
       <ScrollView

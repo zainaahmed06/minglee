@@ -4,7 +4,7 @@ import {colors, spacing} from "@/theme";
 import {Slot} from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import {useEffect} from "react";
-import {ActivityIndicator, View} from "react-native";
+import {ActivityIndicator, StatusBar, View} from "react-native";
 import {ToastProvider} from "react-native-toast-notifications";
 
 export default function RootLayout() {
@@ -46,6 +46,10 @@ export default function RootLayout() {
       dangerColor={colors.danger}
       warningColor={colors.warning}
       normalColor={colors.backgroundSecondary}>
+      <StatusBar
+        barStyle={"dark-content"}
+        backgroundColor={colors.background}
+      />
       <Slot
         screenOptions={{
           headerShown: false,
