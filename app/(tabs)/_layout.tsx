@@ -29,6 +29,7 @@ const TabsLayout = () => {
         tabBarStyle: {
           shadowOpacity: 0,
           shadowColor: "white",
+          borderTopWidth: 0,
         },
         headerShown: false,
       }}>

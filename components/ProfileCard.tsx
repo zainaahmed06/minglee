@@ -124,21 +124,16 @@ const styles = StyleSheet.create({
   card: {
     width: CARD_WIDTH,
     height: CARD_HEIGHT,
-    borderRadius: 0, // Removed border radius for full-screen effect
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    borderRadius: spacing.md, // Removed border radius for full-screen effect
     backgroundColor: colors.background,
+    paddingHorizontal: spacing.md,
+    paddingBottom: spacing.sm,
   },
   image: {
     width: "100%",
     height: "100%",
-    borderRadius: 0, // Removed border radius for full-screen effect
+
+    borderRadius: spacing.md, // Removed border radius for full-screen effect
     overflow: "hidden",
     justifyContent: "flex-end",
   },
@@ -147,7 +142,7 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     padding: spacing.md,
-    borderRadius: 20,
+    borderRadius: spacing.md,
     backgroundColor: "rgba(0,0,0,0.4)",
   },
   userInfo: {

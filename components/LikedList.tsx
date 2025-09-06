@@ -44,7 +44,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({profile, onPress}) => {
         <Image
           source={{uri: profileImage}}
           style={styles.profileImage}
-          defaultSource={require("@/assets/images/adaptive-icon.png")}
+          defaultSource={require("@/assets/images/MingleeLogo.png")}
         />
         {profile.is_verified && (
           <View style={styles.verifiedBadge}>

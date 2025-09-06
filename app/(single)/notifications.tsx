@@ -1,13 +1,16 @@
+import {COLLECTIONS, DATABASES} from "@/constants/databases";
+import {databases} from "@/services/appwrite";
+import {useAuth} from "@/store/useAuth";
 import {colors, fontSizes, radius, spacing} from "@/theme";
 import {
   Notifications as NotificationsType,
   NotificationType,
-  TargetType,
 } from "@/types/appwrite.d";
 import {useRouter} from "expo-router";
 import LottieView from "lottie-react-native";
 import React, {useEffect, useState} from "react";
 import {FlatList, Pressable, StyleSheet, Text, View} from "react-native";
+import {Query} from "react-native-appwrite";
 
 // Import lotties
 import heartAnimation from "@/lotties/Heart.json";
@@ -18,108 +21,87 @@ import {SafeAreaView} from "react-native-safe-area-context";
 
 const Notifications = () => {
   const router = useRouter();
+  const {user} = useAuth();
   const [notifications, setNotifications] = useState<NotificationsType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Simulated data fetch - in a real app, this would come from Appwrite or your backend
-    const mockNotifications: NotificationsType[] = [
-      {
-        $id: "1",
-        $createdAt: new Date().toISOString(),
-        $updatedAt: new Date().toISOString(),
-        $permissions: [],
-        $collectionId: "notifications",
-        $databaseId: "minglee",
-        $sequence: 1,
-        user_id: "user123",
-        NotificationType: NotificationType.MATCH,
-        title: "New Match!",
-        body: "You and Sarah have matched! Start a conversation now.",
-        is_read: false,
-        target_type: TargetType.APP,
-      },
-      {
-        $id: "2",
-        $createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-        $updatedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-        $permissions: [],
-        $collectionId: "notifications",
-        $databaseId: "minglee",
-        $sequence: 2,
-        user_id: "user123",
-        NotificationType: NotificationType.LIKE,
-        title: "New Like",
-        body: "Alex liked your profile! Check them out.",
-        is_read: true,
-        target_type: TargetType.APP,
-      },
-      {
-        $id: "3",
-        $createdAt: new Date(
-          Date.now() - 2 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        $updatedAt: new Date(
-          Date.now() - 2 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        $permissions: [],
-        $collectionId: "notifications",
-        $databaseId: "minglee",
-        $sequence: 3,
-        user_id: "user123",
-        NotificationType: NotificationType.MESSAGE,
-        title: "New Message",
-        body: "Jessica sent you a new message: 'Hey there! How's your day going?'",
-        is_read: false,
-        target_type: TargetType.APP,
-      },
-      {
-        $id: "4",
-        $createdAt: new Date(
-          Date.now() - 3 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        $updatedAt: new Date(
-          Date.now() - 3 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        $permissions: [],
-        $collectionId: "notifications",
-        $databaseId: "minglee",
-        $sequence: 4,
-        user_id: "user123",
-        NotificationType: NotificationType.MATCH,
-        title: "New Match!",
-        body: "You and Mike have matched! Start a conversation now.",
-        is_read: true,
-        target_type: TargetType.APP,
-      },
-    ];
+    const fetchNotifications = async () => {
+      if (!user) {
+        setError("Please login to view notifications");
+        setLoading(false);
+        return;
+      }
 
-    // Simulate API call delay
-    setTimeout(() => {
-      setNotifications(mockNotifications);
-      setLoading(false);
-    }, 1000);
-  }, []);
+      try {
+        const response = await databases.listDocuments(
+          DATABASES.MAIN,
+          COLLECTIONS.NOTIFICATIONS, // Collection ID for notifications
+          [
+            Query.equal("user_id", user.$id),
+            Query.orderDesc("$createdAt"), // Show newest notifications first
+            Query.limit(50), // Limit to 50 notifications
+          ]
+        );
 
-  const handleNotificationPress = (notification: NotificationsType) => {
-    // Mark notification as read
-    setNotifications((prevNotifications) =>
-      prevNotifications.map((item) =>
-        item.$id === notification.$id ? {...item, is_read: true} : item
-      )
-    );
+        setNotifications(response.documents as NotificationsType[]);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching notifications:", err);
+        setError("Failed to load notifications");
+        setLoading(false);
+      }
+    };
 
-    // Navigate based on notification type
-    switch (notification.NotificationType) {
-      case NotificationType.MATCH:
-        router.push("/matches");
-        break;
-      case NotificationType.LIKE:
-        router.push("/explore");
-        break;
-      case NotificationType.MESSAGE:
-        router.push("/chats");
-        break;
+    fetchNotifications();
+  }, [user]);
+
+  const handleNotificationPress = async (notification: NotificationsType) => {
+    try {
+      // Update notification status in Appwrite database
+      await databases.updateDocument(
+        DATABASES.MAIN,
+        COLLECTIONS.NOTIFICATIONS,
+        notification.$id,
+        {
+          is_read: true,
+        }
+      );
+
+      // Update local state
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((item) =>
+          item.$id === notification.$id ? {...item, is_read: true} : item
+        )
+      );
+
+      // Navigate based on notification type
+      switch (notification.NotificationType) {
+        case NotificationType.MATCH:
+          router.push("/matches");
+          break;
+        case NotificationType.LIKE:
+          router.push("/explore");
+          break;
+        case NotificationType.MESSAGE:
+          router.push("/chats");
+          break;
+      }
+    } catch (err) {
+      console.error("Error marking notification as read:", err);
+      // Still navigate even if the update failed
+      switch (notification.NotificationType) {
+        case NotificationType.MATCH:
+          router.push("/matches");
+          break;
+        case NotificationType.LIKE:
+          router.push("/explore");
+          break;
+        case NotificationType.MESSAGE:
+          router.push("/chats");
+          break;
+      }
     }
   };
 
@@ -216,12 +198,48 @@ const Notifications = () => {
           loop
           style={styles.emptyAnimation}
         />
-        <Text style={styles.emptyTitle}>No notifications yet</Text>
-        <Text style={styles.emptySubtitle}>
-          When you get matches, likes or messages, they&apos;ll appear here
-        </Text>
+        {error ? (
+          <>
+            <Text style={styles.emptyTitle}>{error}</Text>
+            <Text style={styles.emptySubtitle}>Please try again later</Text>
+          </>
+        ) : (
+          <>
+            <Text style={styles.emptyTitle}>No notifications yet</Text>
+            <Text style={styles.emptySubtitle}>
+              When you get matches, likes or messages, they&apos;ll appear here
+            </Text>
+          </>
+        )}
       </View>
     );
+  };
+
+  // Function to refresh notifications
+  const refreshNotifications = async () => {
+    if (!user) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await databases.listDocuments(
+        DATABASES.MAIN,
+        COLLECTIONS.NOTIFICATIONS,
+        [
+          Query.equal("user_id", user.$id),
+          Query.orderDesc("$createdAt"),
+          Query.limit(50),
+        ]
+      );
+
+      setNotifications(response.documents as NotificationsType[]);
+      setLoading(false);
+    } catch (err) {
+      console.error("Error refreshing notifications:", err);
+      setError("Failed to refresh notifications");
+      setLoading(false);
+    }
   };
 
   return (
@@ -245,6 +263,8 @@ const Notifications = () => {
           contentContainerStyle={styles.listContent}
           ListEmptyComponent={renderEmptyComponent}
           showsVerticalScrollIndicator={false}
+          onRefresh={refreshNotifications}
+          refreshing={loading}
         />
       )}
     </SafeAreaView>

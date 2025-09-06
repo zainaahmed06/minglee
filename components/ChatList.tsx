@@ -73,7 +73,7 @@ const ChatItem: React.FC<ChatItemProps> = ({chat, onPress}) => {
         <Image
           source={{uri: chat.profilePic}}
           style={styles.profilePic}
-          defaultSource={require("@/assets/images/adaptive-icon.png")} // Fallback image if URI fails
+          defaultSource={require("@/assets/images/MingleeLogo.png")} // Fallback image if URI fails
         />
         {chat.status === "online" && <View style={styles.onlineStatus} />}
       </View>

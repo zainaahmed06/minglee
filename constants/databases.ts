@@ -5,6 +5,7 @@ export const DATABASES = {
 
 export const COLLECTIONS = {
   PROFILES: "profiles",
+  NOTIFICATIONS: "notifications",
 };
 
 // Number of profiles to fetch at a time
