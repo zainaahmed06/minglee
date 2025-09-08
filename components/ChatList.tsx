@@ -16,7 +16,6 @@ import {
 import {Channel} from "stream-chat";
 
 // Type definitions for better type checking
-type ChatStatus = "online" | "offline" | "away" | string;
 
 interface ChatItemProps {
   channel: Channel;
@@ -25,9 +24,10 @@ interface ChatItemProps {
 
 const ChatItem: React.FC<ChatItemProps> = ({channel, onPress}) => {
   // Extract channel data
-  const otherUser = Object.values(channel.state.members || {}).find(
-    (member) => member.user?.id !== channel._client.userID
-  )?.user || null;
+  const otherUser =
+    Object.values(channel.state.members || {}).find(
+      (member) => member.user?.id !== channel._client.userID
+    )?.user || null;
 
   const lastMessage = channel.state.messages[channel.state.messages.length - 1];
   const unreadCount = channel.state.unreadCount || 0;
@@ -147,7 +147,7 @@ const ChatList = () => {
 
       // Navigate to chat screen
       router.push({
-        pathname: "(single)/chatConversation",
+        pathname: "/(single)/chatConversation" as any,
         params: {channelId: channel.id},
       });
     }

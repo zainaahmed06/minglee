@@ -89,7 +89,7 @@ const ChatConversation = () => {
         const formattedMessages = response.messages.map((msg) => ({
           id: msg.id,
           text: msg.text || "",
-          createdAt: new Date(msg.created_at),
+          createdAt: new Date(msg.created_at as any),
           user: {
             id: msg.user?.id || "unknown",
             name: msg.user?.name || "Unknown User",

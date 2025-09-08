@@ -11,7 +11,7 @@ import {ToastProvider} from "react-native-toast-notifications";
 
 export default function RootLayout() {
   const {initialize, isInitialized} = useAuth();
-  const [loaded, error] = useFonts({
+  const [loaded] = useFonts({
     UrbanistBold: require("@/assets/fonts/UrbanistBold.ttf"),
     UrbanistMedium: require("@/assets/fonts/UrbanistMedium.ttf"),
     UrbanistRegular: require("@/assets/fonts/UrbanistRegular.ttf"),
