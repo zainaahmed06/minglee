@@ -634,7 +634,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
     marginBottom: 16,
     textAlign: "center",
   },
@@ -660,12 +660,12 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
     marginBottom: 16,
   },
   sectionSubtitle: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
     marginTop: 16,
     marginBottom: 8,
   },
@@ -693,7 +693,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
   },
   value: {
     fontSize: 16,
@@ -714,7 +714,7 @@ const styles = StyleSheet.create({
   dividerText: {
     marginHorizontal: 10,
     color: "#888",
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
   },
   socialButtons: {
     flexDirection: "row",
@@ -736,7 +736,7 @@ const styles = StyleSheet.create({
   errorTitle: {
     color: "#CF1322",
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
     marginBottom: 8,
   },
   errorText: {
@@ -761,6 +761,6 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 18,
     color: "#FFFFFF",
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
   },
 });

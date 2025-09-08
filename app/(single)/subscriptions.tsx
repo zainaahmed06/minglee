@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   placeholder: {
@@ -277,12 +277,12 @@ const styles = StyleSheet.create({
   },
   currentPlanBadgeText: {
     fontSize: fontSizes.sm,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
     color: colors.textSecondary,
   },
   currentPlanTitle: {
     fontSize: fontSizes.xxxl,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginBottom: spacing.xs,
   },
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
   },
   planName: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   planBadge: {
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
   },
   planBadgeText: {
     fontSize: fontSizes.sm,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.textInverse,
   },
   priceContainer: {
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
   },
   priceText: {
     fontSize: fontSizes.xxxl,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   periodText: {

@@ -1,3 +1,4 @@
+import AuthHeader from "@/components/AuthHeader";
 import Button from "@/components/Button";
 import {Input} from "@/components/Input";
 import {LockIcon, MailIcon} from "@/constants/MingleeIcons";
@@ -5,7 +6,7 @@ import {functions} from "@/services/appwrite";
 import {useAuth} from "@/store/useAuth";
 import {colors, spacing} from "@/theme";
 import {Ionicons} from "@expo/vector-icons";
-import {router} from "expo-router";
+import {Link, router} from "expo-router";
 import React, {useEffect, useState} from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
@@ -222,10 +223,7 @@ const SignUp = () => {
         styles.container,
         {backgroundColor: colors.background, paddingHorizontal: spacing.md},
       ]}>
-      {/* Back Button */}
-      <Pressable style={styles.backButton} onPress={() => router.back()}>
-        <Ionicons name='arrow-back' size={24} color={colors.text} />
-      </Pressable>
+      <AuthHeader />
 
       {/* Main Content */}
       <View style={styles.content}>
@@ -295,7 +293,12 @@ const SignUp = () => {
               </View>
             </Pressable>
             <Text style={[styles.checkboxLabel, {color: colors.text}]}>
-              I agree to Datify Privacy Policy.
+              I agree to Minglee{" "}
+              <Link
+                style={{color: colors.primary, fontFamily: "UrbanistBold"}}
+                href={"https://example.com"}>
+                Privacy Policy.
+              </Link>
             </Text>
           </View>
         </View>
@@ -345,7 +348,7 @@ const SignUp = () => {
         {/* Sign In Link */}
         <View style={styles.signupContainer}>
           <Text style={[styles.signupText, {color: colors.textSecondary}]}>
-            Already have an account ?{" "}
+            Already have an account?{" "}
           </Text>
           <Pressable onPress={() => router.push("/(auth)/signin")}>
             <Text style={[styles.signupLink, {color: colors.primary}]}>
@@ -365,20 +368,16 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: "absolute",
-    top: 50,
-    left: 20,
-    zIndex: 10,
-    width: 40,
-    height: 40,
-    justifyContent: "center",
+    padding: spacing.lg,
+    paddingHorizontal: spacing.md,
   },
   content: {
     flex: 1,
-    paddingTop: 80,
     paddingBottom: 40,
   },
   heading: {
     fontSize: 26,
+    fontFamily: "UrbanistBold",
     fontWeight: "bold",
     marginBottom: 16,
   },
@@ -462,6 +461,7 @@ const styles = StyleSheet.create({
   },
   signupLink: {
     fontSize: 14,
+    fontFamily: "UrbanistBold",
     fontWeight: "bold",
   },
 });

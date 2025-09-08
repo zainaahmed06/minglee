@@ -1,6 +1,7 @@
 import {LogoIcon} from "@/constants/OtherIcons";
 import {useAuth} from "@/store/useAuth";
 import {colors, spacing} from "@/theme";
+import {useFonts} from "expo-font";
 import {Slot} from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import {useEffect} from "react";
@@ -9,6 +10,12 @@ import {ToastProvider} from "react-native-toast-notifications";
 
 export default function RootLayout() {
   const {initialize, isInitialized} = useAuth();
+  const [loaded, error] = useFonts({
+    UrbanistBold: require("@/assets/fonts/UrbanistBold.ttf"),
+    UrbanistMedium: require("@/assets/fonts/UrbanistMedium.ttf"),
+    UrbanistRegular: require("@/assets/fonts/UrbanistRegular.ttf"),
+    UrbanistSemiBold: require("@/assets/fonts/UrbanistSemiBold.ttf"),
+  });
 
   useEffect(() => {
     initialize();
@@ -17,7 +24,7 @@ export default function RootLayout() {
   }, [initialize]);
 
   // Show loading while initializing
-  if (!isInitialized) {
+  if (!isInitialized || !loaded) {
     return (
       <View
         style={{

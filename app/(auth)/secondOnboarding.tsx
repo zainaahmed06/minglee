@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSizes.xxl,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     textAlign: "center",
     marginBottom: spacing.md,

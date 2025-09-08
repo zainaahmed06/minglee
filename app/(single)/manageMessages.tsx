@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: fontSizes.xl,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   optionContainer: {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   optionTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
     color: colors.text,
     marginBottom: spacing.xs,
   },

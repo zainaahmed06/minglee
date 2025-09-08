@@ -1,3 +1,4 @@
+import AuthHeader from "@/components/AuthHeader";
 import Button from "@/components/Button";
 import {Input} from "@/components/Input";
 import {LockIcon} from "@/constants/MingleeIcons";
@@ -193,10 +194,7 @@ const ResetPassword = () => {
         styles.container,
         {backgroundColor: colors.background, paddingHorizontal: spacing.md},
       ]}>
-      {/* Back Button */}
-      <Pressable style={styles.backButton} onPress={() => router.back()}>
-        <Ionicons name='arrow-back' size={24} color={colors.text} />
-      </Pressable>
+      <AuthHeader />
 
       {/* Main Content */}
       <View style={styles.content}>
@@ -343,22 +341,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  backButton: {
-    position: "absolute",
-    top: 50,
-    left: 20,
-    zIndex: 10,
-    width: 40,
-    height: 40,
-    justifyContent: "center",
-  },
   content: {
     flex: 1,
-    paddingTop: 80,
     paddingBottom: 40,
   },
   heading: {
     fontSize: 26,
+    fontFamily: "UrbanistBold",
     fontWeight: "bold",
     marginBottom: 16,
   },
@@ -385,7 +374,8 @@ const styles = StyleSheet.create({
   },
   requirementsTitle: {
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
+    fontWeight: "bold",
     marginBottom: 8,
   },
   requirementItem: {
@@ -406,6 +396,7 @@ const styles = StyleSheet.create({
   },
   signupLink: {
     fontSize: 14,
+    fontFamily: "UrbanistBold",
     fontWeight: "bold",
   },
 });

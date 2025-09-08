@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
     marginBottom: spacing.lg,
     textAlign: "center",
     color: colors.text,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     marginBottom: spacing.sm,
     color: colors.textSecondary,
   },
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   customActiveText: {
     color: colors.primary,
-    fontWeight: "800",
+    fontFamily: "UrbanistBold",
   },
 });
 

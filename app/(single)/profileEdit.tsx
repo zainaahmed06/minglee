@@ -310,7 +310,7 @@ const ProfileEdit = () => {
         />
         <SectionLink
           title='Book Preferences'
-          onPress={() => router.push("/(single)/bookPreferences")}
+          onPress={() => router.push("/(single)/bookPrefrences")}
         />
         <SectionLink
           title='Travel Preferences'

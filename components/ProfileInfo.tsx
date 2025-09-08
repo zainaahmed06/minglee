@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   nameAge: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginBottom: spacing.sm,
   },

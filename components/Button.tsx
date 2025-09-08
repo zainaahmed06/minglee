@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   text: {
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
     textAlign: "center",
     flexShrink: 1,
   },

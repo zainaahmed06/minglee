@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   placeholder: {
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
   },
   notificationTitle: {
     fontSize: fontSizes.md,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   notificationTime: {
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   unreadText: {
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
     color: colors.text,
   },
   unreadIndicator: {
@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: fontSizes.xl,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginVertical: spacing.md,
   },

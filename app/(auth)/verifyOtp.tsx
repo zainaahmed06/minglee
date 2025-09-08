@@ -1,22 +1,27 @@
+import AuthHeader from "@/components/AuthHeader";
 import Button from "@/components/Button";
 import OtpInput from "@/components/OtpInput";
 import {functions} from "@/services/appwrite";
 import {useAuth} from "@/store/useAuth";
 import {colors, fontSizes, spacing} from "@/theme";
-import {Ionicons} from "@expo/vector-icons";
 import {router, useLocalSearchParams} from "expo-router";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
+import {useToast} from "react-native-toast-notifications";
 
 const VerifyOtp = () => {
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [resendDisabled, setResendDisabled] = useState(false);
+  const [countdownTime, setCountdownTime] = useState(120); // 2 minutes in seconds
+  const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const params = useLocalSearchParams();
   const email = params.email as string;
   const otpType = params.type as string;
   const {setOtpVerified} = useAuth();
+  const toast = useToast();
 
   // Check if required parameters exist
   useEffect(() => {
@@ -37,7 +42,56 @@ const VerifyOtp = () => {
     }
   };
 
+  // Function to start the countdown timer
+  const startResendCooldown = () => {
+    setResendDisabled(true);
+    setCountdownTime(120); // Reset to 2 minutes
+
+    // Clear any existing timer
+    if (countdownRef.current) {
+      clearInterval(countdownRef.current);
+    }
+
+    // Set up the new timer
+    countdownRef.current = setInterval(() => {
+      setCountdownTime((prevTime) => {
+        if (prevTime <= 1) {
+          // Timer finished
+          if (countdownRef.current) {
+            clearInterval(countdownRef.current);
+          }
+          setResendDisabled(false);
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+  };
+
+  // Format seconds to mm:ss
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, "0")}:${remainingSeconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (countdownRef.current) {
+        clearInterval(countdownRef.current);
+      }
+    };
+  }, []);
+
   const handleResendOtp = async () => {
+    // Prevent resend if already in cooldown
+    if (resendDisabled) {
+      return;
+    }
+
     if (!email || !otpType) {
       setError(
         "Email or verification type not found. Please go back and try again."
@@ -75,7 +129,16 @@ const VerifyOtp = () => {
         // Show success message
         console.log("OTP resent successfully");
         setError(""); // Clear any existing errors
-        // You could show a success toast here if available
+
+        // Show toast message
+        toast.show("Verification code sent successfully!", {
+          type: "success",
+          placement: "top",
+          duration: 3000,
+        });
+
+        // Start the cooldown timer
+        startResendCooldown();
       }
     } catch (error) {
       console.error("Error resending OTP:", error);
@@ -174,10 +237,7 @@ const VerifyOtp = () => {
         styles.container,
         {backgroundColor: colors.background, paddingHorizontal: spacing.md},
       ]}>
-      {/* Back Button */}
-      <Pressable style={styles.backButton} onPress={() => router.back()}>
-        <Ionicons name='arrow-back' size={24} color={colors.text} />
-      </Pressable>
+      <AuthHeader />
 
       {/* Main Content */}
       <View style={styles.content}>
@@ -204,9 +264,18 @@ const VerifyOtp = () => {
         {/* Verify OTP */}
         <View style={styles.forgotPasswordRow}>
           {/* Resend Code Link */}
-          <Pressable onPress={handleResendOtp}>
-            <Text style={[styles.forgotPasswordLink, {color: colors.primary}]}>
-              Resend Code ?
+          <Pressable onPress={handleResendOtp} disabled={resendDisabled}>
+            <Text
+              style={[
+                styles.forgotPasswordLink,
+                {
+                  color: resendDisabled ? colors.textSecondary : colors.primary,
+                  opacity: resendDisabled ? 0.7 : 1,
+                },
+              ]}>
+              {resendDisabled
+                ? `Resend Code in ${formatTime(countdownTime)}`
+                : "Resend Code ?"}
             </Text>
           </Pressable>
         </View>
@@ -243,22 +312,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  backButton: {
-    position: "absolute",
-    top: 50,
-    left: 20,
-    zIndex: 10,
-    width: 40,
-    height: 40,
-    justifyContent: "center",
-  },
   content: {
     flex: 1,
-    paddingTop: 80,
     paddingBottom: 40,
   },
   heading: {
     fontSize: 26,
+    fontFamily: "UrbanistBold",
     fontWeight: "bold",
     marginBottom: 16,
   },
@@ -267,7 +327,8 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize: fontSizes.md,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
+    fontWeight: "medium",
     color: colors.textSecondary,
     marginBottom: spacing.md,
   },
@@ -292,7 +353,8 @@ const styles = StyleSheet.create({
   },
   forgotPasswordLink: {
     fontSize: 14,
-    fontWeight: "500",
+    fontFamily: "UrbanistBold",
+    fontWeight: "bold",
   },
   signinButton: {
     marginVertical: 20,
@@ -307,6 +369,7 @@ const styles = StyleSheet.create({
   },
   signupLink: {
     fontSize: 14,
+    fontFamily: "UrbanistBold",
     fontWeight: "bold",
   },
 });

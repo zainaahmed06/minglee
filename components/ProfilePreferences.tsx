@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   categoryTitle: {
     fontSize: fontSizes.md,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginBottom: spacing.sm,
   },

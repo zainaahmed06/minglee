@@ -135,22 +135,22 @@ const styles = StyleSheet.create({
   },
   primaryButtonText: {
     color: "white",
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     fontSize: fontSizes.md,
   },
   secondaryButtonText: {
     color: "white",
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     fontSize: fontSizes.md,
   },
   outlineButtonText: {
     color: colors.primary,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     fontSize: fontSizes.md,
   },
   textButtonText: {
     color: colors.primary,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     fontSize: fontSizes.md,
   },
   disabledTextButtonText: {

@@ -1,3 +1,4 @@
+import AuthHeader from "@/components/AuthHeader";
 import Button from "@/components/Button";
 import {Input} from "@/components/Input";
 import {LockIcon, MailIcon} from "@/constants/MingleeIcons";
@@ -8,6 +9,7 @@ import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
 import React, {useEffect, useState} from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
+import {widthPercentageToDP as wp} from "react-native-responsive-screen";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useToast} from "react-native-toast-notifications";
 
@@ -18,6 +20,8 @@ const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
+
+  console.log(wp("100%"));
 
   // Validation states
   const [emailError, setEmailError] = useState("");
@@ -195,17 +199,14 @@ const SignIn = () => {
         styles.container,
         {backgroundColor: colors.background, paddingHorizontal: spacing.md},
       ]}>
-      {/* Back Button */}
-      <Pressable style={styles.backButton} onPress={() => router.back()}>
-        <Ionicons name='arrow-back' size={24} color={colors.text} />
-      </Pressable>
-
+      <AuthHeader />
       {/* Main Content */}
       <View style={styles.content}>
         {/* Header */}
         <Text style={[styles.heading, {color: colors.text}]}>
           Welcome back 👋
         </Text>
+
         {/* Input Fields */}
         <View style={styles.inputContainer}>
           <Input
@@ -249,7 +250,7 @@ const SignIn = () => {
           {/* Forgot Password Link */}
           <Pressable onPress={() => router.push("/(auth)/forgotPassword")}>
             <Text style={[styles.forgotPasswordLink, {color: colors.primary}]}>
-              Forgot password ?
+              Forgot password?
             </Text>
           </Pressable>
         </View>
@@ -295,7 +296,7 @@ const SignIn = () => {
         {/* Sign Up Link */}
         <View style={styles.signupContainer}>
           <Text style={[styles.signupText, {color: colors.textSecondary}]}>
-            Don&apos;t have an account ?{" "}
+            Don&apos;t have an account?{" "}
           </Text>
           <Pressable onPress={() => router.push("/(auth)/signup")}>
             <Text style={[styles.signupLink, {color: colors.primary}]}>
@@ -315,20 +316,16 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: "absolute",
-    top: 50,
-    left: 20,
-    zIndex: 10,
-    width: 40,
-    height: 40,
-    justifyContent: "center",
+    padding: spacing.lg,
+    paddingHorizontal: spacing.md,
   },
   content: {
     flex: 1,
-    paddingTop: 80,
     paddingBottom: 40,
   },
   heading: {
-    fontSize: 26,
+    fontSize: 32,
+    fontFamily: "UrbanistBold",
     fontWeight: "bold",
     marginBottom: 16,
   },
@@ -370,7 +367,8 @@ const styles = StyleSheet.create({
   },
   forgotPasswordLink: {
     fontSize: 14,
-    fontWeight: "500",
+    fontFamily: "UrbanistBold",
+    fontWeight: "bold",
   },
   signinButton: {
     marginVertical: 20,
@@ -417,6 +415,7 @@ const styles = StyleSheet.create({
   },
   signupLink: {
     fontSize: 14,
+    fontFamily: "UrbanistBold",
     fontWeight: "bold",
   },
 });

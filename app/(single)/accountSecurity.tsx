@@ -230,7 +230,8 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
+    fontWeight: "bold",
     color: colors.text,
   },
   placeholder: {
@@ -254,7 +255,8 @@ const styles = StyleSheet.create({
   },
   securityTitle: {
     fontSize: fontSizes.md,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
+    fontWeight: "medium",
     color: colors.text,
   },
   navigationContent: {

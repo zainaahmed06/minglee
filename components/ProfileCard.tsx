@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: fontSizes.xl,
-    fontWeight: "700",
+    fontFamily: "UrbanistBold",
     color: colors.textInverse,
     marginBottom: spacing.xs,
   },
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
   verifiedText: {
     fontSize: fontSizes.sm,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginLeft: 4,
   },

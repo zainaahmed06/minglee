@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: fontSizes.xl,
-    fontWeight: "700",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   emptySpace: {
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
   okButtonText: {
     color: colors.background,
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
   },
 });
 

@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   placeholder: {
@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
   },
   preferenceTitle: {
     fontSize: fontSizes.md,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginBottom: spacing.xs,
   },
@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: fontSizes.md,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginBottom: spacing.md,
   },
@@ -434,7 +434,7 @@ const styles = StyleSheet.create({
   },
   selectorButtonText: {
     fontSize: fontSizes.md,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
     color: colors.textSecondary,
   },
   selectorButtonTextSelected: {
@@ -448,7 +448,7 @@ const styles = StyleSheet.create({
   },
   sliderValue: {
     fontSize: fontSizes.md,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   sliderContainer: {
@@ -474,7 +474,7 @@ const styles = StyleSheet.create({
   rangeLabel: {
     fontSize: fontSizes.sm,
     color: colors.textSecondary,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
   },
   bottomSpacing: {
     height: spacing.xl,

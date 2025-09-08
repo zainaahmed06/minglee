@@ -119,7 +119,7 @@ const Welcome = () => {
         {/* Sign Up Link */}
         <View style={styles.signupContainer}>
           <Text style={[styles.signupText, {color: colors.textSecondary}]}>
-            Don{"'"}t have an account ?{" "}
+            Don{"'"}t have an account?{" "}
           </Text>
           <Pressable onPress={handleSignUp}>
             <Text style={[styles.signupLink, {color: colors.primary}]}>
@@ -138,12 +138,8 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: "absolute",
-    top: 50,
-    left: 20,
-    zIndex: 10,
-    width: 40,
-    height: 40,
-    justifyContent: "center",
+    padding: spacing.lg,
+    paddingHorizontal: spacing.md,
   },
   content: {
     flex: 1,
@@ -203,7 +199,7 @@ const styles = StyleSheet.create({
   },
   signupLink: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
   },
 });
 

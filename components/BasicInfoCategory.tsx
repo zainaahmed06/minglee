@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSizes.md,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   optionsContainer: {

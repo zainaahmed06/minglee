@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   placeholder: {
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   instructionText: {
     fontSize: fontSizes.lg,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
     color: colors.text,
     marginBottom: spacing.xl,
     lineHeight: 24,
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: fontSizes.lg,
     color: colors.text,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
   },
   bottomSpacing: {
     height: spacing.xl,

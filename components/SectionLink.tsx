@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: fontSizes.md,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
     color: colors.text,
     marginBottom: spacing.xs,
   },

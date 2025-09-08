@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   },
   cellText: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   activeCellText: {

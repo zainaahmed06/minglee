@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   errorText: {
     marginTop: spacing.md,
     fontSize: 20,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   errorSubText: {
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   retryButtonText: {
     color: colors.textInverse,
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
   },
   emptyContainer: {
     flex: 1,
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   emptyText: {
     marginTop: spacing.md,
     fontSize: 20,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   emptySubText: {
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
   refreshButtonText: {
     color: colors.textInverse,
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
   },
   // Removed buttons container styles as they're now in ProfileCard
 });

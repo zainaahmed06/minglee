@@ -89,6 +89,8 @@ const SettingsItemComponent: React.FC<{item: SettingsItem}> = ({item}) => (
 const Settings: React.FC = () => {
   const {signOut} = useAuth();
 
+  console.log(fontSizes.lg);
+
   const handleLogout = () => {
     Alert.alert("Logout", "Are you sure you want to logout?", [
       {
@@ -225,7 +227,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   placeholder: {
@@ -281,7 +283,7 @@ const styles = StyleSheet.create({
   },
   upgradeTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: "white",
     marginBottom: spacing.xs,
   },
@@ -312,7 +314,7 @@ const styles = StyleSheet.create({
   settingsItemText: {
     fontSize: fontSizes.md,
     color: colors.text,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
   },
   bottomSpacing: {
     height: spacing.xl,

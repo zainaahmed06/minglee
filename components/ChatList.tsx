@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 22,
-    fontWeight: "700",
+    fontFamily: "UrbanistBold",
     color: "#1F2937",
   },
   newChatButton: {
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
   },
   chatName: {
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: "#1F2937",
     flex: 1,
   },
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
   unreadText: {
     color: "white",
     fontSize: 12,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
   },
   emptyContainer: {
     flex: 1,
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: "#374151",
     marginTop: 16,
   },

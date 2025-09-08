@@ -548,7 +548,8 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 4,
-    fontWeight: "400",
+    fontFamily: "UrbanistBold",
+    fontWeight: "bold",
   },
   inputWrapper: {
     flexDirection: "row",
@@ -582,11 +583,11 @@ const styles = StyleSheet.create({
   },
   errorText: {
     marginTop: 4,
-    fontWeight: "400",
+    fontFamily: "UrbanistRegular",
   },
   description: {
     marginTop: 4,
-    fontWeight: "400",
+    fontFamily: "UrbanistRegular",
   },
 });
 

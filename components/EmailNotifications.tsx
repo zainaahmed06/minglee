@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   notificationTitle: {
     fontSize: fontSizes.md,
     color: colors.text,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
     flex: 1,
   },
 });

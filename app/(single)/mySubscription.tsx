@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   placeholder: {
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
   },
   planBrandName: {
     fontSize: fontSizes.xl,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginRight: spacing.md,
   },
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   premiumText: {
     color: "white",
     fontSize: fontSizes.sm,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
   },
   priceContainer: {
     flexDirection: "row",
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   },
   priceText: {
     fontSize: 48,
-    fontWeight: "700",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   periodText: {
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
   },
   planStatusTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginBottom: spacing.lg,
   },

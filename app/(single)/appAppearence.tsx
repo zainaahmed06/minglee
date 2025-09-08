@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   placeholder: {
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
   settingTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
     color: colors.text,
   },
   valueContainer: {

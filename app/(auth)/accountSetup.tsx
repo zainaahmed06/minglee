@@ -191,14 +191,18 @@ const AccountSetup = () => {
             <Text
               style={{
                 fontSize: 18,
-                fontWeight: "bold",
+                fontFamily: "UrbanistBold",
                 marginBottom: 16,
                 color: colors.text,
               }}>
               Distance Preference
             </Text>
             <Text
-              style={{fontSize: 18, fontWeight: "bold", color: colors.text}}>
+              style={{
+                fontSize: 18,
+                fontFamily: "UrbanistBold",
+                color: colors.text,
+              }}>
               {formatDistance(distance)}
             </Text>
           </View>
@@ -262,16 +266,16 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: colors.background,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
   },
   heading: {
     fontSize: 26,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
     marginBottom: 16,
   },
   subHeading: {
     fontSize: 16,
-    fontWeight: "400",
+    fontFamily: "UrbanistRegular",
     marginBottom: 16,
   },
   sliderContainer: {
@@ -291,7 +295,7 @@ const styles = StyleSheet.create({
   },
   goalTitle: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginBottom: spacing.xs,
   },

@@ -1,9 +1,9 @@
+import AuthHeader from "@/components/AuthHeader";
 import Button from "@/components/Button";
 import {Input} from "@/components/Input";
 import {MailIcon} from "@/constants/MingleeIcons";
 import {functions} from "@/services/appwrite";
 import {colors, spacing} from "@/theme";
-import {Ionicons} from "@expo/vector-icons";
 import {router} from "expo-router";
 import React, {useEffect, useState} from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
@@ -117,11 +117,7 @@ const ForgotPassword = () => {
         styles.container,
         {backgroundColor: colors.background, paddingHorizontal: spacing.md},
       ]}>
-      {/* Back Button */}
-      <Pressable style={styles.backButton} onPress={() => router.back()}>
-        <Ionicons name='arrow-back' size={24} color={colors.text} />
-      </Pressable>
-
+      <AuthHeader />
       {/* Main Content */}
       <View style={styles.content}>
         {/* Header */}
@@ -176,23 +172,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  backButton: {
-    position: "absolute",
-    top: 50,
-    left: 20,
-    zIndex: 10,
-    width: 40,
-    height: 40,
-    justifyContent: "center",
-  },
   content: {
     flex: 1,
-    paddingTop: 80,
     paddingBottom: 40,
   },
   heading: {
     fontSize: 26,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
     marginBottom: 16,
   },
   inputContainer: {
@@ -215,7 +201,7 @@ const styles = StyleSheet.create({
   },
   signupLink: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontFamily: "UrbanistBold",
   },
 });
 

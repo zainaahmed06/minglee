@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   placeholder: {
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     fontSize: fontSizes.sm,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
     color: colors.textTertiary,
     marginBottom: spacing.md,
     marginHorizontal: spacing.lg,
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
   },
   privacyTitle: {
     fontSize: fontSizes.md,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginBottom: spacing.xs,
   },

@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: fontSizes.xl,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   headerButtons: {
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   editButtonText: {
     color: "white",
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
     fontSize: fontSizes.sm,
   },
   settingsButton: {
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
   completionPercentage: {
     color: colors.primary,
-    fontWeight: "700",
+    fontFamily: "UrbanistBold",
     fontSize: fontSizes.sm,
   },
   completionTextContainer: {
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     color: "white",
     flex: 1,
     fontSize: fontSizes.sm,
-    fontWeight: "500",
+    fontFamily: "UrbanistMedium",
   },
   profileImage: {
     width: "100%",

@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   },
   nameText: {
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginBottom: spacing.xs,
   },
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginTop: spacing.md,
     textAlign: "center",
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 18,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginTop: spacing.md,
     textAlign: "center",
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
   retryText: {
     color: "white",
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
   },
 });
 

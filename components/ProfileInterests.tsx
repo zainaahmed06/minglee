@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: fontSizes.md,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
     marginBottom: spacing.sm,
   },

@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: fontSizes.lg,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.text,
   },
   backButton: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     fontSize: fontSizes.md,
-    fontWeight: "600",
+    fontFamily: "UrbanistBold",
     color: colors.primary,
   },
 });
