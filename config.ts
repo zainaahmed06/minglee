@@ -7,10 +7,12 @@ const Config = {
     process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID || "68b537520017ae952ec0",
 
   // GetStream
-  STREAM_API_KEY: process.env.EXPO_PUBLIC_STREAM_API_KEY || "m5respd2e4hq",
+  STREAM_API_KEY: process.env.EXPO_PUBLIC_STREAM_API_KEY || "mpkay9c4wwup",
 
   // API
-  API_URL: process.env.EXPO_PUBLIC_API_URL || "http://10.0.2.2:3000", // Use 10.0.2.2 for Android emulator to access host machine's localhost
+  API_URL:
+    process.env.EXPO_PUBLIC_API_URL ||
+    "https://68bf0e02002dac92de59.fra.appwrite.run/", // Use 10.0.2.2 for Android emulator to access host machine's localhost
 };
 
 export default Config;

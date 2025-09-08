@@ -24,17 +24,22 @@ export const useMatchedProfiles = () => {
         [Query.equal("user_id", user.$id), Query.limit(1)]
       );
 
-      console.log(
-        JSON.stringify(userProfileResponse.documents[0].matched_profiles)
-      );
-
       if (userProfileResponse.documents.length === 0) {
         setMatchedProfiles([]);
         return;
       }
 
+      // Add safe checks for matched_profiles
       const userProfile = userProfileResponse
         .documents[0] as unknown as Profiles;
+
+      if (!userProfile || userProfile === undefined) {
+        console.log("User profile not found");
+        setMatchedProfiles([]);
+        return;
+      }
+
+      console.log("User profile found:", JSON.stringify(userProfile));
       const matchedUserIds = userProfile.matched_profiles || [];
 
       if (matchedUserIds.length === 0) {

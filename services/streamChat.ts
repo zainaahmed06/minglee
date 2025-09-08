@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {StreamChat} from "stream-chat";
 import Config from "../config";
 
@@ -32,12 +33,15 @@ export const connectUser = async (
   try {
     const client = getChatClient();
 
+    // Get the auth token from AsyncStorage
+    const authToken = await AsyncStorage.getItem("appwriteSession");
+
     // Get token from our backend function
     const result = await fetch(`${Config.API_URL}/api/stream/token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("appwriteSession")}`, // Add the auth token
+        ...(authToken ? {Authorization: `Bearer ${authToken}`} : {}),
       },
       body: JSON.stringify({userId}),
     });
