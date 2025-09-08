@@ -1,98 +1,105 @@
+import {useChat} from "@/store/useChatContext";
+import {colors} from "@/theme";
+import {formatChatTime} from "@/utils/chatHelpers";
 import {Ionicons} from "@expo/vector-icons";
-import React from "react";
-import {FlatList, Image, Pressable, StyleSheet, Text, View} from "react-native";
+import {router} from "expo-router";
+import React, {useEffect} from "react";
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import {Channel} from "stream-chat";
 
 // Type definitions for better type checking
-type ChatStatus = "online" | "offline" | "group" | string;
-
-interface Chat {
-  id: number;
-  name: string;
-  lastMessage: string;
-  time: string;
-  unreadCount: number;
-  isMuted: boolean;
-  profilePic: string;
-  status: ChatStatus;
-}
-
-// Learning The System Of Chatting
-const chats = [
-  {
-    id: 1,
-    name: "John Doe",
-    lastMessage: "Hey, are we still meeting tomorrow?",
-    time: "10:45 AM",
-    unreadCount: 2,
-    isMuted: false,
-    profilePic: "https://randomuser.me/api/portraits/women/63.jpg",
-    status: "online",
-  },
-  {
-    id: 2,
-    name: "Sarah Ali",
-    lastMessage: "Got it, thanks!",
-    time: "Yesterday",
-    unreadCount: 5,
-    isMuted: false,
-    profilePic: "https://randomuser.me/api/portraits/women/63.jpg",
-    status: "last seen today at 11:30 AM",
-  },
-  {
-    id: 3,
-    name: "Family Group",
-    lastMessage: "Mom: Dinner is ready 🍲",
-    time: "9:15 PM",
-    unreadCount: 5,
-    isMuted: true,
-    profilePic: "https://randomuser.me/api/portraits/women/63.jpg",
-    status: "group",
-  },
-  {
-    id: 4,
-    name: "Office Team",
-    lastMessage: "Meeting rescheduled to Monday",
-    time: "Monday",
-    unreadCount: 0,
-    isMuted: true,
-    profilePic: "https://randomuser.me/api/portraits/women/63.jpg",
-    status: "group",
-  },
-];
+type ChatStatus = "online" | "offline" | "away" | string;
 
 interface ChatItemProps {
-  chat: Chat;
-  onPress: (id: number) => void;
+  channel: Channel;
+  onPress: (channelId: string) => void;
 }
 
-const ChatItem: React.FC<ChatItemProps> = ({chat, onPress}) => {
+const ChatItem: React.FC<ChatItemProps> = ({channel, onPress}) => {
+  // Extract channel data
+  const otherUser = Object.values(channel.state.members || {}).find(
+    (member) => member.user?.id !== channel._client.userID
+  )?.user || null;
+
+  const lastMessage = channel.state.messages[channel.state.messages.length - 1];
+  const unreadCount = channel.state.unreadCount || 0;
+  const isChannelMuted = channel.muteStatus().muted;
+
+  // Channel name logic - use the other user's name or a fallback
+  const channelName = otherUser?.name || "Chat";
+
+  // Profile image - use the other user's image or fallback
+  const profilePic =
+    otherUser?.image || "https://randomuser.me/api/portraits/lego/1.jpg";
+
+  // Get other user's online status
+  const isOnline = otherUser?.online || false;
+  const status = isOnline ? "online" : "offline";
+
+  // Format last message preview text
+  const getLastMessageText = () => {
+    if (!lastMessage) return "No messages yet";
+
+    if (lastMessage.attachments && lastMessage.attachments.length > 0) {
+      // Handle different attachment types
+      const attachment = lastMessage.attachments[0];
+      if (attachment.type === "image") {
+        return "📷 Image";
+      } else if (attachment.type === "video") {
+        return "🎥 Video";
+      } else if (attachment.type === "file") {
+        return "📎 File";
+      } else if (attachment.type === "audio") {
+        return "🎵 Audio";
+      } else if (attachment.type === "location") {
+        return "📍 Location";
+      }
+      return "Attachment";
+    }
+
+    return lastMessage.text || "New message";
+  };
+
+  // Format message time
+  const messageTime = lastMessage?.created_at
+    ? formatChatTime(new Date(lastMessage.created_at).toISOString())
+    : "";
+
   return (
-    <Pressable style={styles.chatItem} onPress={() => onPress(chat.id)}>
+    <Pressable style={styles.chatItem} onPress={() => onPress(channel.cid)}>
       {/* Profile Picture with Status Indicator */}
       <View style={styles.profileContainer}>
         <Image
-          source={{uri: chat.profilePic}}
+          source={{uri: profilePic}}
           style={styles.profilePic}
           defaultSource={require("@/assets/images/MingleeLogo.png")} // Fallback image if URI fails
         />
-        {chat.status === "online" && <View style={styles.onlineStatus} />}
+        {status === "online" && <View style={styles.onlineStatus} />}
       </View>
 
       {/* Chat Content */}
       <View style={styles.chatContent}>
         <View style={styles.chatHeader}>
           <Text style={styles.chatName} numberOfLines={1}>
-            {chat.name}
+            {channelName}
           </Text>
-          <Text style={styles.chatTime}>{chat.time}</Text>
+          <Text style={styles.chatTime}>{messageTime}</Text>
         </View>
 
         <View style={styles.chatFooter}>
           <Text style={styles.lastMessage} numberOfLines={1}>
-            {chat.lastMessage}
+            {getLastMessageText()}
           </Text>
           <View style={styles.chatMeta}>
-            {chat.isMuted && (
+            {isChannelMuted && (
               <Ionicons
                 name='volume-mute'
                 size={16}
@@ -100,10 +107,10 @@ const ChatItem: React.FC<ChatItemProps> = ({chat, onPress}) => {
                 style={styles.muteIcon}
               />
             )}
-            {chat.unreadCount > 0 && (
+            {unreadCount > 0 && (
               <View style={styles.unreadBadge}>
                 <Text style={styles.unreadText}>
-                  {chat.unreadCount > 99 ? "99+" : chat.unreadCount}
+                  {unreadCount > 99 ? "99+" : unreadCount}
                 </Text>
               </View>
             )}
@@ -115,21 +122,72 @@ const ChatItem: React.FC<ChatItemProps> = ({chat, onPress}) => {
 };
 
 const ChatList = () => {
-  const handleChatPress = (chatId: number) => {
-    console.log(`Chat ${chatId} pressed`);
-    // Navigation logic would go here
+  const {
+    channels,
+    isConnecting,
+    isConnected,
+    error,
+    refreshChannels,
+    setActiveChannel,
+  } = useChat();
+
+  useEffect(() => {
+    if (isConnected) {
+      refreshChannels();
+    }
+  }, [isConnected, refreshChannels]);
+
+  const handleChatPress = (channelId: string) => {
+    // Find the channel
+    const channel = channels.find((c) => c.cid === channelId);
+
+    if (channel) {
+      // Set as active channel
+      setActiveChannel(channel);
+
+      // Navigate to chat screen
+      router.push({
+        pathname: "(single)/chatConversation",
+        params: {channelId: channel.id},
+      });
+    }
   };
+
+  if (isConnecting) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size='large' color={colors.primary} />
+        <Text style={styles.loadingText}>Loading chats...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.emptyContainer}>
+        <Ionicons name='alert-circle-outline' size={60} color='#D1D5DB' />
+        <Text style={styles.emptyText}>Could not load chats</Text>
+        <Text style={styles.emptySubtext}>{error.message}</Text>
+        <Pressable style={styles.retryButton} onPress={() => refreshChannels()}>
+          <Text style={styles.retryText}>Retry</Text>
+        </Pressable>
+      </View>
+    );
+  }
+
   return (
     <View>
-      {chats.length > 0 ? (
+      {channels.length > 0 ? (
         <FlatList
-          data={chats}
-          keyExtractor={(item) => item.id.toString()}
+          data={channels}
+          keyExtractor={(item) => item.cid}
           renderItem={({item}) => (
-            <ChatItem chat={item} onPress={handleChatPress} />
+            <ChatItem channel={item} onPress={handleChatPress} />
           )}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
+          refreshing={isConnecting}
+          onRefresh={refreshChannels}
         />
       ) : (
         <View style={styles.emptyContainer}>
@@ -140,7 +198,7 @@ const ChatList = () => {
           />
           <Text style={styles.emptyText}>No chats yet</Text>
           <Text style={styles.emptySubtext}>
-            Your conversations will appear here
+            Match with someone to start chatting
           </Text>
         </View>
       )}
@@ -258,6 +316,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 16,
+    minHeight: 300,
   },
   emptyText: {
     fontSize: 18,
@@ -270,6 +329,31 @@ const styles = StyleSheet.create({
     color: "#6B7280",
     marginTop: 8,
     textAlign: "center",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
+    minHeight: 300,
+  },
+  loadingText: {
+    fontSize: 16,
+    fontFamily: "UrbanistMedium",
+    color: "#6B7280",
+    marginTop: 16,
+  },
+  retryButton: {
+    marginTop: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    backgroundColor: "#9333EA",
+    borderRadius: 8,
+  },
+  retryText: {
+    color: "white",
+    fontSize: 14,
+    fontFamily: "UrbanistBold",
   },
 });
 

@@ -1,5 +1,6 @@
 import {LogoIcon} from "@/constants/OtherIcons";
 import {useAuth} from "@/store/useAuth";
+import {StreamChatWrapper} from "@/store/useStreamChat";
 import {colors, spacing} from "@/theme";
 import {useFonts} from "expo-font";
 import {Slot} from "expo-router";
@@ -53,15 +54,17 @@ export default function RootLayout() {
       dangerColor={colors.danger}
       warningColor={colors.warning}
       normalColor={colors.backgroundSecondary}>
-      <StatusBar
-        barStyle={"dark-content"}
-        backgroundColor={colors.background}
-      />
-      <Slot
-        screenOptions={{
-          headerShown: false,
-        }}
-      />
+      <StreamChatWrapper>
+        <StatusBar
+          barStyle={"dark-content"}
+          backgroundColor={colors.background}
+        />
+        <Slot
+          screenOptions={{
+            headerShown: false,
+          }}
+        />
+      </StreamChatWrapper>
     </ToastProvider>
   );
 }

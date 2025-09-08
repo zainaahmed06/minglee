@@ -50,6 +50,9 @@
     "react-native-toast-notifications": "^3.4.0",
     "react-native-web": "~0.20.0",
     "react-native-webview": "13.13.5",
+    "stream-chat": "^9.19.0",
+    "stream-chat-expo": "^8.5.0",
+    "stream-chat-react-native": "^8.5.0",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
