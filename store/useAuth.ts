@@ -1,4 +1,5 @@
 import {account} from "@/services/appwrite";
+import {connectUser, disconnectUser} from "@/services/streamChat";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   OAuthProvider as AppwriteOAuthProvider,
@@ -185,6 +186,22 @@ export const useAuthStore = create<AuthState>()(
           if (session) {
             // Get current user data
             const userData = await account.get();
+
+            // Connect to Stream Chat
+            try {
+              await connectUser(
+                userData.$id,
+                userData.name || userData.email.split("@")[0],
+                undefined
+              );
+            } catch (streamError) {
+              console.error(
+                "Failed to connect to Stream Chat during initialization:",
+                streamError
+              );
+              // Continue despite Stream Chat connection failure
+            }
+
             set({
               user: userData as User,
               isAuthenticated: true,
@@ -227,6 +244,18 @@ export const useAuthStore = create<AuthState>()(
           // Get user data
           const userData = await account.get();
 
+          // Connect to Stream Chat
+          try {
+            await connectUser(
+              userData.$id,
+              userData.name || data.email.split("@")[0],
+              undefined
+            );
+          } catch (streamError) {
+            console.error("Failed to connect to Stream Chat:", streamError);
+            // Continue despite Stream Chat connection failure
+          }
+
           set({
             user: userData as User,
             isAuthenticated: true,
@@ -254,6 +283,18 @@ export const useAuthStore = create<AuthState>()(
           // Get user data
           const userData = await account.get();
 
+          // Connect to Stream Chat
+          try {
+            await connectUser(
+              userData.$id,
+              userData.name || data.email.split("@")[0],
+              undefined
+            );
+          } catch (streamError) {
+            console.error("Failed to connect to Stream Chat:", streamError);
+            // Continue despite Stream Chat connection failure
+          }
+
           set({
             user: userData as User,
             isAuthenticated: true,
@@ -280,6 +321,17 @@ export const useAuthStore = create<AuthState>()(
             otpVerified: false,
           });
 
+          // Disconnect from Stream Chat
+          try {
+            await disconnectUser();
+          } catch (streamError) {
+            console.error(
+              "Failed to disconnect from Stream Chat:",
+              streamError
+            );
+            // Continue despite Stream Chat disconnection failure
+          }
+
           // Delete current session
           await account.deleteSession("current");
 
@@ -291,6 +343,16 @@ export const useAuthStore = create<AuthState>()(
             otpVerified: false,
           });
         } catch (error: any) {
+          // Try to disconnect from Stream Chat even if logout fails
+          try {
+            await disconnectUser();
+          } catch (streamError) {
+            console.error(
+              "Failed to disconnect from Stream Chat:",
+              streamError
+            );
+          }
+
           // Even if logout fails, clear local state
           set({
             user: null,
@@ -624,6 +686,21 @@ export const useAuthStore = create<AuthState>()(
 
             // Get user data after successful authentication
             const userData = await account.get();
+
+            // Connect to Stream Chat
+            try {
+              await connectUser(
+                userData.$id,
+                userData.name || userData.email.split("@")[0],
+                undefined
+              );
+            } catch (streamError) {
+              console.error(
+                "Failed to connect to Stream Chat after OAuth login:",
+                streamError
+              );
+              // Continue despite Stream Chat connection failure
+            }
 
             set({
               user: userData as User,

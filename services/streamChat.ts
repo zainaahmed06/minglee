@@ -41,7 +41,7 @@ export const connectUser = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${authToken || ''}`,
+        Authorization: `Bearer ${authToken || ""}`,
       },
       body: JSON.stringify({userId}),
     });
@@ -67,7 +67,7 @@ export const connectUser = async (
         name: userName,
         image: imageUrl,
       },
-      data.token
+      data.data.token
     );
 
     console.log("Successfully connected to Stream Chat");
