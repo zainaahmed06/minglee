@@ -36,12 +36,12 @@ export const connectUser = async (
     // Get the auth token from AsyncStorage
     const authToken = await AsyncStorage.getItem("appwriteSession");
 
-    // Get token from our backend function
-    const result = await fetch(`${Config.API_URL}/api/stream/token`, {
+    // Get token from our Appwrite function
+    const result = await fetch(`${Config.API_URL}/api/stream/v2/token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(authToken ? {Authorization: `Bearer ${authToken}`} : {}),
+        "Authorization": `Bearer ${authToken || ''}`,
       },
       body: JSON.stringify({userId}),
     });
@@ -54,7 +54,7 @@ export const connectUser = async (
 
     const data = await result.json();
 
-    if (!data.success || !data.token) {
+    if (!data.success || !data.data?.token) {
       throw new Error(
         "Failed to get StreamChat token: " + (data.message || "Unknown error")
       );

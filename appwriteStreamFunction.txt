@@ -1,0 +1,440 @@
+# Enhanced Stream Chat API Documentation
+
+This document outlines the available endpoints and functionality for the Enhanced Stream Chat API.
+
+## Base URL
+```
+/api/stream/v2
+```
+
+## Authentication
+All endpoints require authentication via JWT. Include the JWT token in the Authorization header:
+
+```
+Authorization: Bearer YOUR_JWT_TOKEN
+```
+
+## API Endpoints
+
+### User Management
+
+#### Generate Stream Token
+```
+POST /token
+```
+Generate a Stream Chat token for authentication with Stream's client-side SDKs.
+
+**Request Body:**
+```json
+{
+  "userId": "user123"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Token generated successfully",
+  "data": {
+    "token": "stream-chat-token"
+  }
+}
+```
+
+#### Create/Update User
+```
+POST /user
+```
+Create a new user or update an existing user in Stream Chat.
+
+**Request Body:**
+```json
+{
+  "userId": "user123",
+  "name": "John Doe",
+  "imageUrl": "https://example.com/avatar.jpg",
+  "extraData": {
+    "role": "admin",
+    "phone": "123-456-7890"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "User created/updated successfully",
+  "data": {
+    "userId": "user123"
+  }
+}
+```
+
+#### Delete User
+```
+DELETE /user
+```
+Delete a user from Stream Chat.
+
+**Request Body:**
+```json
+{
+  "userId": "user123",
+  "hardDelete": true
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "User deleted successfully"
+}
+```
+
+### Channel Management
+
+#### Create Channel
+```
+POST /channel
+```
+Create a new chat channel.
+
+**Request Body:**
+```json
+{
+  "channelType": "messaging",
+  "channelId": "general",
+  "members": ["user123", "user456"],
+  "name": "General Chat",
+  "creatorId": "user123",
+  "data": {
+    "image": "https://example.com/channel.jpg",
+    "description": "General discussion"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Channel created successfully",
+  "data": {
+    "channel": {
+      "id": "general",
+      "type": "messaging",
+      "cid": "messaging:general",
+      "members": []
+    }
+  }
+}
+```
+
+#### Update Channel
+```
+PUT /channel
+```
+Update an existing chat channel.
+
+**Request Body:**
+```json
+{
+  "channelType": "messaging",
+  "channelId": "general",
+  "data": {
+    "name": "Updated Name",
+    "description": "Updated description"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Channel updated successfully"
+}
+```
+
+#### Delete Channel
+```
+DELETE /channel
+```
+Delete a chat channel.
+
+**Request Body:**
+```json
+{
+  "channelType": "messaging",
+  "channelId": "general"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Channel deleted successfully"
+}
+```
+
+#### Add Members
+```
+POST /channel/members
+```
+Add members to a channel.
+
+**Request Body:**
+```json
+{
+  "channelType": "messaging",
+  "channelId": "general",
+  "members": ["user789", "user101"]
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Members added successfully"
+}
+```
+
+#### Remove Members
+```
+DELETE /channel/members
+```
+Remove members from a channel.
+
+**Request Body:**
+```json
+{
+  "channelType": "messaging",
+  "channelId": "general",
+  "members": ["user789", "user101"]
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Members removed successfully"
+}
+```
+
+#### Query Channels
+```
+POST /channels/query
+```
+Search and filter channels.
+
+**Request Body:**
+```json
+{
+  "filters": {
+    "type": "messaging",
+    "members": { "$in": ["user123"] }
+  },
+  "sort": [{ "last_message_at": -1 }],
+  "options": { 
+    "limit": 10, 
+    "offset": 0 
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Channels retrieved successfully",
+  "data": {
+    "channels": [
+      {
+        "id": "general",
+        "type": "messaging",
+        "cid": "messaging:general",
+        "name": "General Chat",
+        "member_count": 10,
+        "created_at": "2023-08-01T12:00:00Z",
+        "updated_at": "2023-08-01T12:00:00Z"
+      }
+    ]
+  }
+}
+```
+
+### Moderation
+
+#### Ban User
+```
+POST /ban
+```
+Ban a user, optionally from a specific channel.
+
+**Request Body:**
+```json
+{
+  "targetUserId": "user456",
+  "channelType": "messaging",
+  "channelId": "general",
+  "reason": "Inappropriate behavior",
+  "timeout": 3600,
+  "ipBan": false
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "User banned successfully"
+}
+```
+
+#### Unban User
+```
+DELETE /ban
+```
+Unban a user, optionally from a specific channel.
+
+**Request Body:**
+```json
+{
+  "targetUserId": "user456",
+  "channelType": "messaging",
+  "channelId": "general"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "User unbanned successfully"
+}
+```
+
+#### Query Banned Users
+```
+POST /bans/query
+```
+Get a list of banned users.
+
+**Request Body:**
+```json
+{
+  "filters": {
+    "channel_cid": "messaging:general"
+  },
+  "options": {
+    "limit": 10,
+    "offset": 0
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Banned users retrieved successfully",
+  "data": {
+    "bans": [],
+    "total": 0
+  }
+}
+```
+
+#### Flag Message
+```
+POST /flag/message
+```
+Flag a message for moderation review.
+
+**Request Body:**
+```json
+{
+  "messageId": "message123",
+  "userId": "user123"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Message flagged successfully"
+}
+```
+
+#### Flag User
+```
+POST /flag/user
+```
+Flag a user for moderation review.
+
+**Request Body:**
+```json
+{
+  "targetUserId": "user456",
+  "userId": "user123"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "User flagged successfully"
+}
+```
+
+### System
+
+#### Health Check
+```
+GET /health
+```
+Check the health status of the Stream Chat service.
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Health status retrieved successfully",
+  "data": {
+    "status": "ok"
+  }
+}
+```
+
+## Error Responses
+
+All endpoints return standardized error responses:
+
+```json
+{
+  "success": false,
+  "message": "Error message",
+  "error": {
+    "code": "ERROR_CODE",
+    "type": "ErrorType",
+    "stack": "..."  // Only in development
+  }
+}
+```
+
+Common HTTP status codes:
+- `400` - Bad Request
+- `401` - Unauthorized
+- `403` - Forbidden
+- `404` - Not Found
+- `409` - Conflict
+- `429` - Too Many Requests
+- `500` - Internal Server Error
